@@ -1,0 +1,155 @@
+{% load humanize %}
+{% load staticfiles %}
+{% load get_underscore_vals %}
+<div class='row'>
+	<div class='large-12 columns'>
+		<div class='panel'>
+			<h3>Search results</h3>
+			<ul>
+				<li>Items found: {{ results.query_details.count }}</li>
+				<li>Time spent: {{ results.query_details.time }}</li>
+				{% if user.is_superuser %}
+					<li>Query{{results.query_details.query}}</li>
+					{{results.page}}
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class='row'>
+	<div class='large-12 columns'>
+		<table>
+			<thead class='results_thead'>
+				<th width='30'>#</th>
+				<th>Item ID</th>
+				{% if game_type == 'tf2' %}
+				<th>Level</th>
+				{% endif %}
+				<th>Quality</th>
+				{% if game_type != 'csgo' %}
+				<th>Craftable</th>
+				{% else %}
+				<th>Exterior</th>
+				{% endif %}
+				<th>Tradable</th>
+				<th>Hours</th>
+				<th>Owner</th>
+				<th width='112'>Links</th>
+				<th width='102'>More info</th>
+			</thead>
+
+			{% for item in results.items %}
+			<tr class='item_row'>
+				<td>{% if results.page > 1 %}
+                		{{results.page|add:-1|multiply:20|add:forloop.counter}}
+              		{% else %}
+                		{{forloop.counter}}
+              		{% endif %}
+          		</td>
+				<td>
+					{% if user_details|premium:game_type or item.hours > 300 %}
+						{{item|get:"_id"}}</td>
+					{% else %}
+						<font color='#c60f13'>✘</font>
+					{% endif %}
+				{% if game_type == 'tf2' %}
+					<td>{{item.level}}</td>
+				{% endif %}
+				<td>{{item.quality}}</td>
+				<td>
+					{% if game_type != 'csgo'%}
+						{% if item.craftable %}
+				        	<font color='#5da423'>✔</font>
+				        {% else %}
+				        	<font color='#c60f13'>✘</font>
+				        {% endif %}
+				    {% else %}
+				    	{{item.exterior}}
+				    {% endif %}
+			    </td>
+				<td>
+					{% if item.tradable %}
+			        	<font color='#5da423'>✔</font>
+			        {% else %}
+			        	<font color='#c60f13'>✘</font>
+			        {% endif %}
+				</td>
+				<td>{% if item.hours > 0 %}
+						{{item.hours|trim|intcomma}}
+					{% else %}
+						??
+					{% endif %}
+				</td>
+				<td>{{item.owner_status}}</td>
+				<td>
+			        {% if user_details|premium:game_type or item.hours > 300 %}
+			          <a target="_blank" href="http://steamcommunity.com/profiles/{{ item.owner }}"><img src='{% static "images/steam_icon.png" %}' width="20px"></a>
+
+			          <a target="_blank" href="http://tf2b.com/{% if game_type == 'tf2'%}tf2{% endif %}{% if game_type == 'dota2'%}dota{% endif %}{% if game_type == 'csgo'%}csgo{%endif%}/{{ item.owner }}"><img src='{% static "images/tf2b_icon.png" %}' width="20px"></a>
+			          
+			          <a target="_blank" href="{% if game_type == 'tf2'%}http://backpack.tf/profiles/{% else %}http://dota2.backpack.tf/profiles/{% endif %}{{ item.owner }}"><img src='{% static "images/backpack_tf_icon.png" %}' width="20px"></a>
+
+			          <a href="steam://friends/add/{{item.owner}}"><img src='{% static "images/add_user.png" %}' width="20px"></a>
+			        {% else %}
+			        	<a href='/buy'><span class="radius label">Buy</span></a>
+			        {% endif %}
+				</td>
+
+				<td>
+					{% if user_details|premium:game_type or item.hours > 300 %}
+						<a href="#!" class='tiny button' onClick='more_info(this)'>Click me</a>
+					{% else %}
+						{% if user_details.donator %}
+							<a href="#!" class='tiny button' onClick='more_info(this)'>Click me</a>
+						{% else %}
+							<a href='/buy'><span class="radius label">Buy</span></a>
+						{% endif %}
+					{% endif %}
+				</td>
+			</tr>
+
+		
+				<tr class='hidden'>
+				{% if game_type == 'tf2' %}
+					<td colspan=10 class='item_info'>
+				{% else %}
+					<td colspan=9 class='item_info'>
+				{% endif %}
+						{% if game_type == 'tf2'%}
+							{% include "hatsdb/static/more_info_tf2.html" %}
+						{% elif game_type == 'dota2' %}
+							{% include "hatsdb/static/more_info_dota2.html" %}
+						{% elif game_type == 'csgo' %}
+							{% include "hatsdb/static/more_info_csgo.html" %}
+						{% endif %}
+						<p class="hide_info" onclick='hide_info(this)'>×</p>
+					</td>
+					
+				</tr>
+
+
+
+			{% endfor %}
+		</table>
+	</div>
+</div>
+
+
+<div class='row'>
+	<div class='large-3 columns'>
+		{% if results.page > 1  %}
+			<a href="#" onClick='load_search_results({{results.page|add:-1}})' class='button'>
+				&laquo Previous page 
+			</a>
+		{% endif %}
+	</div>
+
+	<div class='large-3 columns large-offset-6' style='text-align:right'>
+		{% if results.query_details.count > results.page|multiply:20 %}
+			<a href="#" onClick='load_search_results({{results.page|add:1}})' class='button'>
+				Next page &raquo
+			</a>
+		{% endif %}
+	</div>
+</div>

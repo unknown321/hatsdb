@@ -1,0 +1,34 @@
+<ul class="descriptions">
+
+{% if item.quality %}
+	<li class="item_desc">Quality: {{item.quality}}</li>
+{% endif %}
+
+{% if item.exterior %}
+	<li class="item_desc">Exterior: {{item.exterior}}</li>
+{% endif %}
+
+{% if item.stickers %}
+	<li class="item_desc">Stickers: 
+		<ul>
+			{% for sticker in item.stickers %}
+			<li class="item_desc">{{sticker}}</li>
+			{% endfor %}
+		</ul>
+	</li>
+{% endif %}
+
+{% if item.gifted %}
+	<li class="item_desc">This item was gifted</li>
+{% endif %}
+
+{% if item.uses %}
+	<li class="item_desc">Uses: {{item.uses}}</li>
+{% endif %}
+
+{% if not item.craftable %}
+	<li class="item_desc">Not craftable</li>
+{% endif %}
+
+
+</ul>

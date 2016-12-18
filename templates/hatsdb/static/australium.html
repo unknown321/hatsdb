@@ -1,0 +1,108 @@
+{% extends "hatsdb/static/header.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% load dajaxice_templatetags %}
+{% load get_underscore_vals %}
+{% block head %}
+    <script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+    <script language="JavaScript" type="text/javascript" src="{% static "javascripts/site/australiums.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/site/dynamic_info.js" %}"></script>
+    <link href="{% static "stylesheets/multiple-select.css" %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static "stylesheets/site/unusuals.css" %}"/>
+{% endblock %}
+{% block title%}Australiums{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <input type='hidden' value='tf2' id='game_type' name='game_type'>
+    <div class='row' style='margin-bottom:20px'>
+      <div class='large-12 columns'>
+        <dl class="accordion" data-accordion>
+          <dd class="accordion-navigation">
+            <div id="filter" class="content active">
+
+                <!-- item row -->
+                <div class='row'> 
+                    <div class='large-2 columns'>
+                      <label class='right inline' for='item_name'>Item</label>
+                    </div>
+
+                    <div class='large-7 columns'>
+                      <input type="text" id='item_name' name='item_name' list="items" placeholder='Type item name and hit enter to filter' autocomplete='off'>
+                      <input type="hidden" id='defindex' name='defindex'>
+                    </div>
+
+                    <div class='large-2 columns'>
+                      <a href='#!' onclick="get_defitems()" class="button small postfix">Search</a>
+                    </div>
+
+                    <div class='large-1 columns'>
+                      <i class='fi-check hidden'></i>
+                    </div>
+                    <input type='hidden' id='page' name='page' value='1'>
+
+                    <datalist id="items">
+                    </datalist>
+                </div>
+
+                <!-- sort by & level row -->
+                  <div class='row'>
+                    <div class='large-2 columns'>
+                      <label class='right inline' for='sorttype'>Sort by:</label>
+                    </div>
+
+                    <div class='large-3 columns end'>
+                      <label for="sort_by1">
+                        <input name="sorttype" type="radio" id="sort_by1" value=0 checked>
+                        <span class="custom radio checked"></span>
+                        Drop date (default)
+                      </label>
+
+                      <label for="sort_by2">
+                        <input name="sorttype" type="radio" id="sort_by2" value=1>
+                        <span class="custom radio"></span>
+                        Hours
+                      </label>
+                    </div>
+
+                  </div>
+
+                <!-- filter button -->
+                  <div class='row'>
+                    <div class='large-4 columns large-centered'>
+                      <a class='success button filter_button' onclick='load_filtered_australiums(0)' style='width:100%'>Filter</a>
+                    </div>
+                  </div>
+
+
+            </div>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='large-12 columns' id='loaded_defitems'>
+      </div>
+    </div>
+
+    <div id='results_wrapper'>
+    {% include "hatsdb/ajax/australium_items.html" %}
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block footer_scripts %}
+<script type="text/javascript">
+$('#item_name').on('input', function a(){load_names()} );
+$('#item_name').keypress(function b(event){if(event.keyCode == 13){get_defitems()}} );
+</script>
+    <script src="{% static "javascripts/vendor/jquery.multiple.select.js" %}"></script>
+    <script>
+        $("select").multipleSelect({
+            filter: true,
+            placeholder: "Click to select"
+        });
+    </script>
+{% endblock %}

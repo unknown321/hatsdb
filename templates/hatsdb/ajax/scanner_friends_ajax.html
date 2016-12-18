@@ -1,0 +1,117 @@
+{% load staticfiles %}
+<div class='row'>
+	<div class='large-12 columns'>
+		<fieldset class='scanner_item'>
+			<legend	style="background-color: rgba(255, 255, 255, 0)">
+				<font size="4" color="#CCCCCC">
+					<a href="http://steamcommunity.com/profiles/{{result.info.id}}" target="_blank">
+					<img src="{{result.info.avatar}}"> ∙ {{result.info.nickname}}</a>
+				</font>
+				 ∙ 
+				<i class='fi-clock'></i> {% if result.hours != -1 %}{{result.hours}}{% else %}??{% endif %} hour{{result.hours|pluralize}} 
+			</legend>
+			<div class='row' >
+				<div class='large-11 columns'>
+					<ul class="breadcrumbs">
+						<li class='player_info'>
+							<a href="http://steamcommunity.com/profiles/{{result.info.id}}"><i class='fi-social-steam'></i>: {{result.info.nickname}}</a></li>
+						<li class='player_info current'><i class='fi-clock'></i>: 
+							<img src="{% static "images/tf2_icon.png" %}"/> 
+							{% if result.info.all_hours.440 != -1 %}{{result.info.all_hours.440}}{% else %}??{% endif %} 
+							<img src="{% static "images/dota2_icon.png" %}"/> 
+							{% if result.info.all_hours.570 != -1 %}{{result.info.all_hours.570}}{% else %}??{% endif %} 
+							<img src="{% static "images/csgo_icon.png" %}"/> 
+							{% if result.info.all_hours.730 != -1 %}{{result.info.all_hours.730}}{% else %}??{% endif %} 
+						</li>
+						<li class='player_info'>
+							<i class='fi-link'></i>: 
+							<a href="http://tf2b.com/
+							{% if game_type == 'dota' %}dota{% else %}{{game_type}}{% endif %}/{{result.info.id}}
+							">TF2B</a>
+						</li>
+						{% if game_type != 'csgo' %}
+						<li class='player_info'>
+							<i class='fi-link'></i>: <a href="http://{% if game_type == dota %}dota.{%endif%}backpack.tf/
+							profiles/{{result.info.id}}
+							">Backpack.tf</a></li>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+
+				<div class='large-1 columns'>
+					<a class='tiny button' onClick="toggle_visibility('{{result.info.id}}')" >▼</a>
+				</div>
+
+			</div>
+			<div class='row' id='{{result.info.id}}'>
+			{% if result.items == -1 %}
+				Steam returned an error, you should rescan this person again.
+			{% elif result.items|length == 0 %}
+				<div class='large-12 centered columns'><center>No items of interest at all, probably private inventory.</center></div>
+			{% else %}
+				{% for key, value in result.items.items %}
+				<div class='large-12 centered columns'>
+					<h4 class='q_name'>{{key}} ({{value|length}} item{{value|length|pluralize}})</h4>
+					<div class="panel quality_panel_{{game_type}}">
+
+						{% for item in value %}
+							{% if forloop.counter == 1 %}
+							<div class='row item_row' id='row_{{forloop.counter}}'>
+							{% endif %}
+
+							<div class='item_wrapper_{{game_type}}'
+							style='border: 3px solid #{{item.name_color}}'
+							id={{item.id}}
+							info='
+							
+								{% if item.marketable == 1 %}
+								<b><a href="http://steamcommunity.com/market/listings/{{game_id}}/{{item.market_hash_name}}">{{item.name}}</a></b> (click to look for item on market)
+								{% else %}
+								<b>{{item.name}}</b>
+								{% endif %}
+							</br>
+							{{item.type}}</br>
+							
+								<ul class="descriptions">
+								{% for d in item.descriptions %}
+								{% if d.value|length > 0 %}
+									{% if "(" in d.value or ":" in d.value %}
+										<li class="item_desc">{{d.value}}</li>
+									{%endif%}
+								{% endif %}
+								{%endfor%}
+
+								</ul>
+							
+							'
+							onClick="add_notification(this)">
+								<img src="http://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}/
+								{% if game_type == 'tf2'%}79fx79f{% else %}97fx97f{% endif %}" title="{{item.name}}"/>
+								
+							</div>
+
+						{% if forloop.counter != value|length %}
+							{% if game_type == 'tf2' and forloop.counter|divisibleby:11 %}
+								</div><div class='row item_row' id='row_{{forloop.counter}}'>
+							{% endif %}
+							{% if forloop.counter|divisibleby:9 %}
+								{% if game_type == 'dota2' or game_type == 'csgo'%}
+									</div><div class='row item_row' id='row_{{forloop.counter}}'>
+								{% endif %}
+							{% endif %}
+						{% endif %}
+						{% if forloop.counter == value|length %}
+						</div>
+						{% endif %}
+
+						{% endfor %}
+					</div>
+				</div>
+				{% endfor %}
+			{% endif %}
+			</div>
+		</fieldset>
+		<img src="{% static "images/line.png" %}">
+	</div>
+</div>

@@ -1,0 +1,138 @@
+{% extends "hatsdb/static/header.html" %}
+{% load dajaxice_templatetags %}	
+{% load humanize %}
+{% load staticfiles %}
+{% load webdesign %} 
+{% block custom_scripts %}
+    <script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/site/friends.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "stylesheets/scanner.css" %}">
+{% endblock %}
+{% block title%}Friends scanner{% endblock %}
+{% block menu_second%} active {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class='row'>
+  <div class='large-12 columns '>
+    <div class="alert-box secondary">
+      <u><center>Item server may become unstable at the times. If you cannot see your inventory in the game or any backpack viewers - scanning won't work either.</center></u>
+    </div>
+  </div>
+</div>
+
+
+{% if game_type == 'tf2' and not user_details.premium_tf2 or game_type == 'dota2' and not user_details.premium_dota2 or game_type == 'csgo' and not user_details.premium_csgo %}
+{% if not user_details.donator %}
+<div class='row'>
+  <div class='large-12 columns '>
+    <div class="alert-box secondary">
+      <center>Looks like you have no premium membership for this game!
+               Sorry, but you'll have to buy membership or get a <a href=/buy.html#donator> donator status</a> to use this function.
+             </br>
+             Alternatively you can do everything by hand.
+             Copy profiles from the box below and paste them into <a href='/{{game_type}}/scanner'/>scanner</a>.</center>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+
+<div class='row'>
+  <div class='large-12 columns '>
+    <div class="alert-box warning">
+      <center>WARNING! If you have a lot of friends, your browser may not handle the amount of backpacks (especially Dota 2 ones).</br>In that case split steam ids from textbox below and paste small chunks there.</center>
+    </div>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='large-10 columns end'>
+    <h4>Friends scanner</h4>
+  </div>
+</div>
+
+{% if friends == 1 %}
+  <center>Your profile is set to private or Steam network is too busy to handle requests. Please check if your profile is public.</center>
+{% elif friends == 2 %}
+  <center>You have no friends at all. Maybe your profile is private? Please check if your profile is public. </center>
+{% else %}
+  <input type='hidden' id='tasks'>
+
+  <div class='row' data-equalizer>
+    <form action="" class="custom">
+
+      <div class='large-6 columns'>
+    	  <textarea name='steam_ids' rows=3  id='steam_ids' data-equalizer-watch autocomplete='off'>{% for f in friends %}{{f}},{% endfor %}</textarea>
+      </div>
+
+      <div class='large-4 columns' >
+        <div class='panel' data-equalizer-watch>
+          <label for='marketable'>
+            <input type='checkbox' id='marketable' onclick='switch_box(this)' autocomplete='off'/> Marketable only?
+          </label>
+          <label for='uncraft'>
+            <input type='checkbox' id='uncraft' onclick='switch_box(this)' autocomplete='off'/> Hide uncraftable items?
+          </label>
+          <label for='untrade'>
+            <input type='checkbox' id='untrade' onclick='switch_box(this)' autocomplete='off'/> Hide untradable items?
+          </label>
+          <hr style='margin-top:0px'>
+          <div id='gametypebuttons'>
+            <p style='margin-bottom:0px'>Game type:
+            <a href='#!' onclick="switch_game('tf2')">
+              <span class="radius label {% if game_type == 'tf2' %}maintype{% else %}secondary{% endif %}" id='tf2' ><b>TF2</b></span>
+            </a>
+            <a href='#!' onclick="switch_game('dota2')">
+              <span class="radius label {% if game_type == 'dota2' %}maintype{% else %}secondary{% endif %}" id='dota2'><b>DOTA 2</b></span>
+            </a>
+            <a href='#!' onclick="switch_game('csgo')">
+              <span class="radius label {% if game_type == 'csgo' %}maintype{% else %}secondary{% endif %}" id='csgo' ><b>CS:GO</b></span>
+            </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class='large-2 columns'>
+
+        <div style="vertical-align: middle;display:table-cell" data-equalizer-watch>
+          <a href="#!" class="large button expanded success" onClick="send()" id="scan_button"><i class='fi-magnifying-glass'></i>  Scan</a>
+          <a href="/blacklist" target='_blank' class="small button expand" style='vertical-align: bottom; margin-bottom:0px'><i class='fi-page-delete'></i>  Blacklist</a>
+        </div>
+
+
+      </div>
+
+    </form>
+  </div>
+
+  <div class='row'>
+    <div class='large-12 columns'>
+      <div class='row collapse'>
+          <div class="large-2 columns">
+            <span class="prefix">Filter text:</span>
+          </div>
+          <div class="large-8 columns">
+            <input type="text" id="right-label filter" >
+          </div>
+          <div class="large-1 columns">
+            <!-- http://stackoverflow.com/a/11246131/216941 -->
+            <a href="#!" class="success button postfix" onclick='filter_items()'>Filter</a>
+          </div>
+          <div class="large-1 columns end">
+            <a href="#!" class="alert button postfix" onclick='clear_filter()'>Clear</a>
+          </div>
+      </div>
+    </div>
+    <img src="{% static "images/line.png" %}">
+  </div>
+
+  <div id='scanner_results'>
+  </div>
+{% endif %}
+
+{% else %}
+{%endif%}
+{% endblock %}

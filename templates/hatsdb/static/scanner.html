@@ -1,0 +1,103 @@
+{% extends "hatsdb/static/header.html" %}
+{% load dajaxice_templatetags %}
+{% load humanize %}
+{% load staticfiles %}
+
+{% block custom_scripts %}
+    <script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/site/scanner.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "stylesheets/scanner.css" %}">
+{% endblock %}
+{% block title%}Glorious items scanner{% endblock %}
+{% block menu_second%} active {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class='row'>
+  <div class='large-12 columns '>
+    <div class="alert-box secondary">
+      <u><center>Item server may become unstable at the times. If you cannot see your inventory in the game or any backpack viewers - scanning won't work either.</center></u>
+    </div>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='large-10 columns end'>
+    <h4>Server scanner</h4>
+  </div>
+</div>
+
+<div class='row' data-equalizer>
+  <form action="" class="custom">
+
+    <div class='large-6 columns'>
+  	  <textarea name='steam_ids' rows=3  id='steam_ids' data-equalizer-watch autocomplete='off'></textarea>
+      <input type='hidden' id='tasks'>
+    </div>
+
+    <div class='large-4 columns' >
+      <div class='panel' data-equalizer-watch>
+        <label for='marketable'>
+          <input type='checkbox' id='marketable' onclick='switch_box(this)' autocomplete='off'/> Marketable only?
+        </label>
+        <label for='uncraft'>
+          <input type='checkbox' id='uncraft' onclick='switch_box(this)' autocomplete='off'/> Hide uncraftable items?
+        </label>
+        <label for='untrade'>
+          <input type='checkbox' id='untrade' onclick='switch_box(this)' autocomplete='off'/> Hide untradable items?
+        </label>
+        <hr style='margin-top:0px'>
+        <div id='gametypebuttons'>
+          <p style='margin-bottom:0px'>Game type:
+          <a href='#!' onclick="switch_game('tf2')">
+            <span class="radius label {% if game_type == 'tf2' %}maintype{% else %}secondary{% endif %}" id='tf2' ><b>TF2</b></span>
+          </a>
+          <a href='#!' onclick="switch_game('dota2')">
+            <span class="radius label {% if game_type == 'dota2' %}maintype{% else %}secondary{% endif %}" id='dota2'><b>DOTA 2</b></span>
+          </a>
+          <a href='#!' onclick="switch_game('csgo')">
+            <span class="radius label {% if game_type == 'csgo' %}maintype{% else %}secondary{% endif %}" id='csgo' ><b>CS:GO</b></span>
+          </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class='large-2 columns'>
+      <div style="vertical-align: middle;display:table-cell" data-equalizer-watch>
+        {% if user.is_superuser %}
+        <p class="large button" onclick="$('#steam_ids').val('')"></p>
+        {% endif %}
+        <a href="#!" class="large button expand success" onClick="send()" id="scan_button"><i class='fi-magnifying-glass'></i>  Scan</a>
+        <a href="#!" data-reveal-id="howto" class="small button expand" style='vertical-align: bottom; margin-bottom:0px'><i class='fi-info'></i> How to use</a>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<div id='scanner_results'>
+</div>
+
+
+<div id="howto" class="reveal-modal medium" data-reveal>
+  <h2>How to use</h2>
+  <ul>
+	  <li>First, you have to join some random server.</li>
+	  <li>Next, open console and type 'status'. It will give you a list of players on server - like on pic below. Works for both TF2 and CS:GO (you can scan people in Dota by scanning spectators while being a spectator).</li>
+	  <img src="{% static "images/howto.png" %}">
+	  <li>Copy the output and paste it into the textbox. It doesn't matter if list contains kill lines or something else.</li>
+	  <li>Press 'Scan' button and wait till the magic is done.</li>
+    <li>Scanner has a short url - <a href="http://hatsdb.com/s">http://hatsdb.com/s</a></li>
+    <li>Still need an example? Here is a video from one of users:<br/>
+      <iframe width="460" height="315" src="http://www.youtube.com/embed/oTXXRSjnxRY" frameborder="0" allowfullscreen></iframe>
+    </li>
+  </ul>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+{% else %}
+{%endif%}
+{% endblock %}
+

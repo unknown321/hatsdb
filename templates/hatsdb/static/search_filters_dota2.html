@@ -1,0 +1,48 @@
+<fieldset style="padding-top: 20px;padding-bottom:0px;margin-top: -12px;">
+	<legend>
+		Regular filters
+	</legend>
+
+		<!-- Strange parts filter -->
+		<div class="row">
+			<div class='large-4 columns'>
+				<label class="right inline">Gems:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='gems' id='gems'>
+				 <option value=''>Any gem</option>
+				 {% for g in data.gems %}
+				 <option value='{{ g.defindex }}' >{{ g.name }}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>
+
+	<!-- gifted filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline" for='gifted'>Gifted:</label>
+			</div>
+			<div class="large-8 columns" style="padding-top: 9px; padding-bottom: 9px;">
+				<input type='checkbox' name='gifted' id='gifted' autocomplete='off'>
+			</div>
+		</div>
+
+		<!-- item uses filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Item uses:</label>
+			</div>
+			<div class='large-8 columns end'>
+				<input type="text" name="item_uses" id="item_uses" placeholder="Numbers only; blank for any number of uses" autocomplete="off"/>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="large-12 columns">
+				<label class="right inline">Looking for heroic items and need more options? <a href="/dota2/tournament">Click here!</a></label>
+			</div>
+		</div>
+
+</fieldset>

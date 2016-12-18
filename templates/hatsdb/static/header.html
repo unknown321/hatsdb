@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load status %}
+<html class="no-js" lang="en">
+<head>
+  <link rel="icon" type="image/ico" href="{% static "images/favicon.ico" %}" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HatsDB - {% block title%}{% endblock %}</title>
+  <script src="{% static "javascripts/google.js" %}"></script>
+  <script src="{% static "javascripts/vendor/modernizr.js" %}"></script>
+  <link rel="stylesheet" href="{% static "stylesheets/foundation.css" %}"/>
+  <link rel="stylesheet" href="{% static "stylesheets/foundation-icons.css" %}"/>
+  
+  {% block head %}{% endblock %}
+  {% block custom_scripts %}{% endblock %}
+</head>
+
+<body style='background-image: url(/static/images/bg.png);height: auto;' game_type="{{game_type}}">
+
+    <div class='row'>
+      <div class='large-12 columns'>
+        <nav class="top-bar" data-topbar role="navigation">
+          <ul class="title-area">
+            <li class="{% block menu_first %}{% endblock %}">
+             <a href="/"><img src="{% static "images/logo.png" %}"></a>
+            </li>
+          </ul>
+
+          <section class="top-bar-section">
+            <!-- Left Nav Section -->
+            <ul class="left">
+              <li class="{% block menu_second %}{% endblock %}">
+                <a href="/tf2/scanner"><i class='fi-magnifying-glass'></i> Scanner</a>
+              </li>
+              <li class="{% block menu_third %}{% endblock %}">
+                <a href="/faq"><i class='fi-info'></i> FAQ</a>
+              </li>
+              <li class="{% block menu_fourth %}{% endblock %}">
+                <a href="/stats"><i class='fi-graph-trend'></i> Stats</a>
+              </li>
+              <li class="{% block menu_fifth %}{% endblock %}">
+                <a href="/buy"><i class='fi-dollar'></i> Buy</a>
+              </li>
+              {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+              <li>
+                <a href="/admin_v2">Admin page</a>
+              </li>
+                {% endif %}
+              {% endif %}
+            </ul>
+
+            <!-- Right Nav Section -->
+            <ul class="right">
+              {% if user.is_authenticated %}
+              <li class="has-dropdown">
+                <a href="#!">
+                  <img src="{{user_details.avatar_url}}" style='margin-top:-4px'>&nbsp;{{user_details.nickname}}
+                </a>
+                  
+                <ul class="dropdown">
+                  <li>
+                    <a href="#!">
+                     TF2 premium:
+                     {% if user_details.premium_tf2 %}
+                       <font color='#5da423'>✔</font>
+                     {% else %}
+                       <font color='#c60f13'>✘</font>
+                     {% endif %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#!">
+                     DOTA 2 premium:
+                     {% if user_details.premium_dota2 %}
+                       <font color='#5da423'>✔</font>
+                     {% else %}
+                       <font color='#c60f13'>✘</font>
+                     {% endif %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#!">
+                     CS:GO premium:
+                     {% if user_details.premium_csgo %}
+                       <font color='#5da423'>✔</font>
+                     {% else %}
+                       <font color='#c60f13'>✘</font>
+                     {% endif %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#!">
+                     Donator:
+                     {% if user_details.donator %}
+                       <font color='#5da423'>✔</font>
+                     {% else %}
+                       <font color='#c60f13'>✘</font>
+                     {% endif %}
+                    </a>
+                  </li>
+                 <li class="divider"></li>
+                  <li>
+                    <a href="/blacklist">Blacklist</a>
+                  </li>
+                 <li class="divider"></li>
+                 <li><a href="/logout/" onclick='location.replace("/logout");'>Logout</a></li>
+                </ul>
+              </li>
+              {% else %}
+              <li>
+                <a href="/openid/login/"><img class=' inline right' src="{% static 'images/steam_login.png'%}"></a>
+              </li>
+              {% endif %}
+            </ul>
+
+          </section>
+        </nav>
+      </div>
+    </div>
+
+    {% if not user.is_authenticated %}
+    <div class='row'> 
+      <div class='large-12 columns'>
+        <div data-alert class="alert-box warning">
+          You are not logged in! Please log in via Steam to use this site.
+          <a href="" class="close">&times;</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+    {% if user.is_superuser and DEBUG %}
+    <div class='row'> 
+      <div class='large-12 columns'>
+        <div data-alert class="alert-box alert">
+          DEBUG
+          <a href="" class="close">&times;</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+  {% block content %}{% endblock %}
+
+<footer style='margin-bottom:-25px'>
+    <div class='row' id="footer">
+      <div class='large-12 columns'>
+        <hr style='margin-bottom:8px'>
+        <div class='large-3 columns' data-equalizer-watch>
+          <font color='aaaaaa'>
+            <p style='margin-bottom:0px'>
+              HatsDB.com, 2012-2014
+            </p>
+          </font>
+        </div>
+       <div class='large-1 columns' data-equalizer-watch style='background-image: url({% static 'images/fin.png'%});background-repeat: no-repeat;height:30px'>
+        </div>
+        <div class='large-3 columns large-offset-5' data-equalizer-watch>
+          <a href='http://steampowered.com' style='margin-bottom:0px'>
+            <font color='aaaaaa'>
+              <p style='margin-bottom:0px'>
+                Powered by Steam
+              </p>
+            </font>
+          </a>
+        </div>
+      </div>
+    </div> 
+</footer>
+
+<!--  <div id="failure" class="reveal-modal" data-reveal>
+    <center><h2>FFS</h2>
+    <center><h3>Something went wrong during your request.</h3>
+    <h4>What can you do?</h4></center>
+    <div class='row'>
+      <div class='large-12 columns'>
+        <font color='#ff0033'><h3>First of all - check the status of Steam item server by viewing your inventory<br><a href="http://tf2b.com/tf2/{{user_details.user.claimed_id|slice:"36:"}}">http://tf2b.com/tf2/{{user_details.user.claimed_id|slice:"36:"}}</a></font></br>If you cannot see your backpack - item server is <font color='#ff0033'>DOWN</font> and all scanner-related stuff won't work.</h3><hr>
+        However, if your backpack is available and Steam Community is up - you can try options below:
+      </div>
+    </div>
+    <div class='large-6 columns'><p class='button' onClick="window.location.reload()">Reload the page - maybe it will help<p></div>
+      <div class='large-6 columns'>
+        <a class='tiny button' href='steam://friends/add/'>Add and report the problem</a></br>
+      <font color='#A8A8A8'>Only in case of significant problems</font>
+      </div>
+    <a class="close-reveal-modal">&#215;</a>
+  </div> --!>
+
+
+  <script src="{% static "javascripts/vendor/jquery.js" %}"></script>
+  <script src="{% static "javascripts/vendor/fastclick.js" %}"></script>
+  <script src="{% static "javascripts/foundation.min.js" %}"></script>
+  <script src="{% static "javascripts/jquery.lazyload.min.js" %}"></script>
+  <script src="{% static "javascripts/jquery.color.plus-names-2.1.2.min.js" %}"></script>
+  <!-- https://github.com/coreysyms/foundationStickyFooter thanks corey -->
+  <script src="{% static "javascripts/vendor/stickyFooter.js" %}"></script>
+
+  <script>
+    $(document).foundation();
+    $(function() {
+      $("img.lazy").lazyload();
+  });
+  </script>
+
+{% block footer_scripts %}
+{% endblock %}
+
+</body>
+</html>

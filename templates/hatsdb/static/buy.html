@@ -1,0 +1,130 @@
+{% extends "hatsdb/static/header.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% load webdesign %}
+{% load get_underscore_vals %}
+{% block custom_scripts %}
+    <script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+	<script type="text/javascript" src="{% static "javascripts/site/buy.js" %}"></script>
+{% endblock %}
+
+{% block title%}Buy{% endblock %}
+{% block menu_fifth%} active {% endblock %}
+
+{% block content %}
+<div class='row'>
+	<div class='large-12 columns'>
+		<br>
+		<h4>What does the premium include?</h4>
+		<div class='row' data-equalizer>
+			<div class='large-4 columns'  >
+				<ul class="pricing-table">
+				  <li class="title"><img src="{% static "images/tf2.png" %}" alt='Team Fortress 2'></li>
+				  <li class="bullet-item">Full access to TF2 database</li>
+				  <li class="bullet-item">List of recently unboxed unusuals</li>
+				  <li class="bullet-item">List of recently dropped australiums</li>
+				  <li class="bullet-item">
+				  	{% if user_details|premium:'tf2' %}
+				  	<a href="#!" class='button secondary disabled' style="margin-bottom: 0px;">You have it! Yay!</a>
+				  	{% else %}
+				  	<a href="#!" class='button success' style="margin-bottom: 0px;" onClick='buy("tf2")'>Buy now</a>
+				  	{% endif %}
+				  </li>
+				</ul>
+			</div>
+
+			<div class='large-4 columns'  data-equalizer-watch>
+				<ul class="pricing-table">
+				  <li class="title"><img src="{% static "images/dota2.png" %}" alt='Dota 2'></li>
+				  <li class="bullet-item">Full access to Dota 2 database</li>
+				  <li class="bullet-item">List of recently unboxed unusuals</li>
+				  <li class="bullet-item">List of recently dropped heroic items</li>
+				  <li class="bullet-item">
+				  	{% if user_details|premium:'dota2' %}
+				  	<a href="#!" class='button secondary disabled' style="margin-bottom: 0px;">You have it! Yay!</a>
+				  	{% else %}
+				  	<a href="#!" class='button success' style="margin-bottom: 0px;" onClick='buy("dota2")'>Buy now</a>
+				  	{% endif %}
+				  </li>
+				</ul>
+			</div>
+
+			<div class='large-4 columns'  data-equalizer-watch>
+				<ul class="pricing-table">
+				  <li class="title"><img src="{% static "images/csgo_inverted.png" %}" alt='CS:GO'></li>
+				  <li class="bullet-item">Full access to CS:GO database</li>
+				  <li class="bullet-item">List of recently unboxed knifes</li>
+				  <li class="bullet-item">List of recently dropped tournament items</li>
+				  <li class="bullet-item">
+				  	{% if user_details|premium:'csgo' %}
+				  	<a href="#!" class='button secondary disabled' style="margin-bottom: 0px;">You have it! Yay!</a>
+				  	{% else %}
+				  	<a href="#!" class='button success' style="margin-bottom: 0px;" onClick='buy("csgo")'>Buy now</a>
+				  	{% endif %}
+				  </li>
+				</ul>
+			</div>
+		</div>
+
+		<div class='row' id='message'></div>
+
+		<h5>How much?</h5>
+		<ul>
+			<li>1 (one) pair of <a href='http://wiki.teamfortress.com/wiki/Earbuds'>Earbuds</a> for selected game.</li>
+		</ul>
+		<br>
+
+
+		<h5>Payment methods?</h5>
+		<ul>
+			<li>We accept <u>non-gifted</u> Earbuds as main currency. Sorry, but we cannot take your weapons/keys/Alien Swarm Parasites/game gifts/Runescape gold etc. These items will be accepted as a donation only. Sorry, but no PayPal.</li>
+		</ul>
+		<br>
+
+		<h5>How to get earbuds?</h5>
+		<ul>
+			<li>You can get them on <a href="http://tf2outpost.com">TF2 Outpost</a>, <a href="http://bazaar.tf">Bazaar.tf</a>, <a href="http://forums.sourceop.com/">Sourceop forums</a> and <a href="http://steamcommunity.com/market/listings/440/Earbuds">Steam Community Market</a></li>
+		</ul>
+		<br>
+
+		<h5>What about gifted earbuds?</h5>
+		<ul>
+			<li>Accepted only as a donation, no premium will be granted.</li>
+		</ul>
+		<br>
+
+		<h5>How much is the subscription?</h5>
+		<ul>
+			<li>1 earbud for chosen game.</li>
+		</ul>
+		<br>
+
+		<h5>Can I get my earbud back if I am unable to get some hats?</h5>
+		<ul>
+			<li>Nope, <u>this is impossible</u>. Seriously, no refunds. If you have some doubts - do not get premium and just use <a href='/faq#general4'>free version</a>.</li>
+		</ul>
+		<br>
+
+		<h5>I have earbuds, give me the access now!</h5>
+		<ul>
+			<li>Select the game on top of the page, then add the bot - <a href='http://steamcommunity.com/profiles/'><span class="radius label"></span></a>, type 'premium' in the chat window, put the earbud in the trade window, click 'Ready' and make the trade. Easy, right?</li>
+		</ul>
+
+		<h5>Something went wrong during the premium upgrade!!</h5>
+		<ul>
+			<li>Type 'message your_problem' into the bot chat. You don't have to add underscores, just type your problem after the 'message' command. If the bot is offline, send an email to .</li>
+		</ul>
+
+		<hr>
+		<h3 id='donator'>Donations</h3>
+		<h5>I want to donate!</h5>
+		<ul>
+			<li>First, click here - <a href="#!" style="margin-bottom: 0px;" onClick='buy("donator")'>Donate</a>. <i class="fi-check" style='display:none;color: #43ac6a;'></i></p>
+				After clicking <a href='http://steamcommunity.com/profiles/'>add the bot</a>, type 'premium' and put any items you want into the trade window. However you will not get a donator status unless the total cost of donated items is more than $5 (based on Steam Market prices) and the amount of items is less or equal than 5. This limit was made so you would not be able to get a donator status by donating gorillion crates. The bot will tell you if you are getting a donator status or not before commiting the trade.</li>
+		</ul>
+
+		<h3><center>AND PLEASE BEWARE OF IMPERSONATORS.<br> ADD BOT ONLY VIA LINKS ON SITE</center></h3>
+	</div>
+</div>
+{% endblock %}

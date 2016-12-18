@@ -1,0 +1,32 @@
+{% load humanize %}
+				<div class='four columns'>
+					<div class='panel'>
+						<h2>TF2</h2>
+						<h3>Items: {{ stats.tf2_items|intcomma }}</h3>
+						<h4>Owners: {{ stats.tf2_owners|intcomma }}</h4>
+						<h4>Unusuals: {{ stats.tf2_unusuals|intcomma }}</h4>
+						<h4>Earbuds: {{ stats.tf2_earbuds|intcomma }}</h4>
+						<h4>Bill's hats: {{ stats.tf2_bills|intcomma }}</h4>
+						<!-- 
+						<hr>
+						<h4>Subscribers: {{ stats.tf2_subscribers }}</h4> -->
+					</div>
+				</div>
+				<div class='four columns'>
+					<div class='panel'>
+						<h2>Dota 2</h2>
+						<h3>Items: {{ stats.dota2_items|intcomma }}</h3>
+						<h4>Owners: {{ stats.dota2_owners|intcomma }}</h4>
+						<h4>Unusuals: {{ stats.dota2_unusuals|intcomma }}</h4>
+						<h4>Couriers: {{ stats.dota2_couriers|intcomma }}</h4>
+						<h4>Timebreakers: {{ stats.dota2_timebreakers|intcomma }}</h4>
+<!-- 						<hr>
+						<h4>Subscribers: {{ stats.dota2_subscribers }}</h4> -->
+					</div>
+				</div>
+				<div class='four columns'>
+					<div class='panel'>
+						<h2>Users</h2>
+						<h3>Total: {{ stats.users }}</h3>
+					</div>
+				</div>

@@ -1,0 +1,49 @@
+.item.panel:hover{
+	background-color: #a2a2a2;
+	cursor: hand;
+	cursor: pointer;
+}
+
+fieldset > legend{
+	background-color: transparent;
+}
+
+.item_row > td{
+	text-align: center;
+}
+
+.results_thead > tr > th{
+	text-align: center;
+}
+
+td > a.button{
+	 margin-bottom:0px;
+}
+
+.descriptions{
+    margin-bottom: 0px;
+}
+
+td.item_info{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    background: none repeat scroll 0 0 #333333;
+    color: #ffffff;
+    padding-right: 5px;
+    padding-left: 5px;
+    position:relative;
+}
+
+p.hide_info{
+    /*close button on item info*/
+    position:absolute; 
+    right:10px; 
+    top:-10px;
+    color: #ffffff;
+    font-size:30px;
+    margin-top: 5px;
+}
+
+.hidden{
+	display: none;
+}

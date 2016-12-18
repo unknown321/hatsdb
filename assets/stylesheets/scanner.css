@@ -1,0 +1,102 @@
+.panel .item_info{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    background: none repeat scroll 0 0 #333333;
+    color: #ffffff;
+    padding-right: 5px;
+    padding-left: 5px;
+    position:relative;
+}
+
+.item_info .item_desc{
+    color: #ffffff;
+}
+
+.descriptions{
+    margin-bottom: 0px;
+}
+
+.item_info .hide_info{
+    /*close button on item info*/
+    position:absolute; 
+    right:10px; 
+    top:-10px;
+    color: #ffffff;
+    font-size:30px;
+    margin-top: 5px;
+}
+
+.selected_item_pic{
+    box-shadow: 0 0 1em hsla(0, 0%, 0%, 1);
+}
+
+.q_name{
+    margin-bottom: 0px;
+    max-width: 500px;
+}
+
+.item_wrapper_tf2{
+    height:79px;
+    width:79px;
+    display:inline-block;
+}
+
+.item_wrapper_dota2{
+    height:97px;
+    width:97px;
+    display:inline-block;
+}
+
+.item_wrapper_csgo{
+    height:97px;
+    width:97px;
+    display:inline-block;
+}
+
+.quality_panel_dota2{
+    padding-top: 1px; 
+    padding-bottom: 5px;
+    width: 918px;
+}
+
+.quality_panel_csgo{
+    padding-top: 1px; 
+    padding-bottom: 5px;
+    width: 918px;
+}
+
+.quality_panel_tf2{
+    padding-top: 1px; 
+    padding-bottom: 5px;
+    width: 922px;
+}
+
+.quality_panel_tf2 .item_row{
+    margin-top: 4px;
+
+}
+
+.quality_panel_csgo .item_row{
+    margin-top: 4px;
+}
+
+.quality_panel_dota2 .item_row{
+    margin-top: 4px;
+}
+
+.player_info{
+    font-size:15px;
+}
+
+.underlined_link{
+    text-decoration: underline;
+}
+
+.scanner_item{
+    padding-bottom: 0px;
+}
+
+.filter_panel{
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}

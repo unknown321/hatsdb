@@ -1,0 +1,149 @@
+{% extends "hatsdb/static/header.html" %}
+{% load staticfiles %}
+{% load humanize %}
+{% load dajaxice_templatetags %}
+{% block custom_scripts %}
+	<script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+    <script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+	<script type="text/javascript" src="{% static "javascripts/site/search.js" %}"></script>
+	<link href="{% static "stylesheets/multiple-select.css" %}" rel="stylesheet"/>
+	<link rel="stylesheet" href="{% static "stylesheets/site/search.css" %}"/>
+
+{% endblock %}
+
+{% block title%}Search{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<input type='hidden' value="{{game_type}}" id='game_type'>
+<div class="row">
+	<div class="large-12 columns">
+
+		<dl class="tabs" data-tab>
+			<dd class="active"><a href="#step1" style="padding: 8px;">
+				{% if game_type == 'tf2' %}
+				<img src="{% static "images/tf2.png" %}" style="height: 42px;">
+				{% elif game_type == 'dota2' %}
+				<img src="{% static "images/dota2.png" %}" style="height: 42px;">
+				{% else %}
+				<img src="{% static "images/csgo.png" %}" style="height: 42px;">
+				{% endif %}
+				&nbsp;Select item&nbsp&nbsp<i class="fi-arrow-right"></i>&nbsp</a></dd>
+			<dd><a href="#step2" id='step2link'>Additional options <i class='fi-arrow-right'></i></a></dd>
+			<dd><a href="#step3" id='step3link'>Results</a></dd>
+		</dl>
+
+		<div class="tabs-content">
+			<!-- first step -->
+			<div class="content active" id="step1">
+				<div class='row collapse'>
+					<div class='large-10 columns'>
+						<input type="text" list="items" id='item_name' autocomplete='off'  placeholder="Type item name here...">
+					</div>
+
+					<div class='large-2 columns'>
+						<a href="#!" class='button postfix' onclick='get_defitems()'><i class='fi-zoom'></i> Search</a>
+					</div>
+
+					<datalist id="items">
+					</datalist>
+					<input type='hidden' id='page' name='page' value='1'>
+
+				</div>
+
+				<div class="row">
+					<div class='large-12 columns' id='loaded_defitems'></div>
+				</div>
+
+			</div>
+
+			<div class='content' id="step2">
+				<!-- second step -->
+				<!-- no item selected -->
+				<div id='noitem'>
+					<center><h3>No item selected!</h3></center>
+				</div>
+
+				<!-- item selected -->
+				<div id='hiddenstep2' style='display:none'>
+
+						{% csrf_token %}
+						<div class='row'>
+
+							<!-- item image -->
+								<div class='large-4 columns'>
+									<center>
+										<img src="" id='item_pic' height='200px'>
+										</br>
+										<h5 id='item_name_ss'></h5>
+									</center> 
+									<input type='hidden' name='defindex' id='defindex' autocomplete="off"/>
+
+								</div>
+
+							<!-- item stats -->
+								<div class='large-8 columns' id='quality_stats'></div>
+						</div>
+
+						<img src="{% static "images/line.png" %}" style='margin-bottom:15px'>
+
+						<div class='row'>
+							<div class='large-12 columns'>
+								<center><h5>Search options</h5></center>
+							</div>
+						</div>
+
+						<div class='row'>
+							<!-- common options -->
+							<div class='large-6 columns'>
+								{% include 'hatsdb/static/search_filters_common.html' %}
+							</div>
+
+							<!-- game-related options -->
+							<div class='large-6 columns'>
+							{% if game_type == 'tf2' %}
+								{% include 'hatsdb/static/search_filters_tf2.html' %}
+							{% elif game_type == 'dota2' %}
+								{% include 'hatsdb/static/search_filters_dota2.html' %}
+							{% elif game_type == 'csgo' %}
+								{% include 'hatsdb/static/search_filters_csgo.html' %}
+							{% endif %}
+							</div>
+						</div>
+
+
+					<!-- search button -->
+					<div class="row">
+						<div class="large-5 columns large-centered">
+							<a class='success button expand'  onClick='load_search_results(0)'>Search</a>
+						</div>
+					</div>
+				</div>
+
+
+			<!-- end of second step -->
+			</div>
+			<div class='content' id='step3'>
+				<div id='results'>
+					<center><h3>Nothing to see here... yet.</h3></center>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% else %}
+{%endif%}
+{% endblock %}
+
+{% block footer_scripts %}
+<script type="text/javascript">
+$('#item_name').on('input', function a(){load_names()} );
+$('#item_name').keypress(function b(event){if(event.keyCode == 13){get_defitems()}} );
+</script>
+    <script src="{% static "javascripts/vendor/jquery.multiple.select.js" %}"></script>
+    <script>
+        $("select").multipleSelect({
+            filter: true,
+            placeholder: "Click to select"
+        });
+    </script>
+{% endblock %}

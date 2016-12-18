@@ -1,0 +1,83 @@
+{% load get_underscore_vals %}
+<!-- hours lower filter -->
+	<div class="row">
+		<div class="large-4 columns">
+			<label class="right inline">Hours lower than:</label>
+		</div>
+		<div class='large-8 columns end'>
+				<input type="text" name="hours_less_than" id="hours_less_than"  autocomplete="off"
+					{% if not user_details|premium:game_type %}
+					disabled='true' placeholder="Available only for subscribed users"
+					{% else %}
+					placeholder="Numbers only; blank for no limit"
+					{% endif %}
+				/>
+		</div>
+	</div>
+
+<!-- hours more filter -->
+	<div class="row">
+		<div class="large-4 columns">
+			<label class="right inline">Hours more than:</label>
+		</div>
+		<div class='large-8 columns end'>
+			<input type="text" name="hours_more_than" id="hours_more_than"  autocomplete="off"
+				{% if not user_details|premium:game_type %}
+				disabled='true' placeholder="Available only for subscribed users"
+				{% else %}
+				placeholder="Numbers only; blank for no limit"
+				{% endif %}
+			/>
+		</div>
+	</div>
+
+<!-- quality  filter -->
+	<div class="row">
+		<div class="large-4 columns" id='quality_label'>
+			<label class="right inline">Quality:</label>
+		</div>
+
+		<div class='large-8 columns end'>
+		 <select name='quality_id' id='quality_id'>
+			 <option value=''>Any quality</option>
+			 {% for q in qualities %}
+			 <option value='{{ q.defindex }}' >{{ q.name }}</option>
+			 {% endfor %}
+			</select>
+		</div>
+	</div>
+
+<!-- untradable filter -->
+	<div class="row">
+		<label for="tradable">
+			<div class="large-4 columns ">
+				<p class='right' style="margin-bottom: 0em;">Show untradable?</p>
+			</div>
+			<div class='large-8 columns end' id='tradable_box'>
+				<div>
+					<a href='#' onclick="switch_box('tradable',1)"><span class="radius label" id='tradable_1' >Yes</span></a>
+					<a href='#' onclick="switch_box('tradable',2)"><span class="radius label secondary" id='tradable_2'>No</span></a>
+					<a href='#' onclick="switch_box('tradable',3)"><span class="radius label secondary" id='tradable_3'>Only untradable</span></a>
+				</div>
+				<input type="text" id="tradable" name='hide_untradable' style="display: none;"	value='1' autocomplete="off">
+			</div>
+		</label>
+	</div>
+
+<!-- uncraftable filter -->
+	<div class="row">
+		<label for="craftable">
+			<div class="large-4 columns ">
+				<p class='right' style="margin-bottom: 0em;">Show uncraftable?</p>
+			</div>
+			<div class='large-8 columns end' id='craftable_box'>
+				<div>
+					<a href='#' onclick="switch_box('craftable',1)"><span class="radius label" id='craftable_1' >Yes</span></a>
+					<a href='#' onclick="switch_box('craftable',2)"><span class="radius label secondary" id='craftable_2'>No</span></a>
+					<a href='#' onclick="switch_box('craftable',3)"><span class="radius label secondary" id='craftable_3'>Only uncraftable</span></a>
+				</div>
+				<input type="text" id="craftable" name='hide_uncraftable' style="display: none;" value='1' autocomplete="off">
+				<br>
+			</div>
+		</label>
+	</div>

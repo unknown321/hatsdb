@@ -1,0 +1,40 @@
+{% if defitems|length > 0 %}
+<p>Note: team images may be wrong, outdated or missing. Don't rely on image alone.</p>
+{% endif %}
+{% for team in defitems %}
+	{% if forloop.counter == 1 %}
+		<div class='row'>
+	{% endif %}
+
+		{% if forloop.counter == defitems|length %}
+			<div class='large-3 columns end'>
+		{% else %}
+			<div class='large-3 columns'>
+		{% endif %}
+				<div class='item panel' onClick='team_selected(this)'
+				defindex="{{team.id}}"
+				name="{{team.name}}"
+				number="{{team_number}}"
+				>
+					<center>
+						{% if team.image_url %}
+						<img src="{{team.image_url}}"/>
+						{% else %}
+						<h6 class="subheader">No team image</h6>
+						{% endif %}
+						</br>
+						Team: {{team.name}}
+					</center>
+				</div>
+			</div>
+
+	{% if forloop.counter|divisibleby:"4" %}	
+		</div>
+		<div class='row'>
+	{% endif %}
+
+	{% if forloop.counter == defitems|length %}
+	</div>
+	{% endif %}
+
+{% endfor %}

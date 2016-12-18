@@ -1,0 +1,25 @@
+<ul class="descriptions">
+
+{% if item.quality %}
+	<li class="item_desc">Quality: {{item.quality}}</li>
+{% endif %}
+
+{% if item.gems %}
+	<li class="item_desc">Gems: 
+		<ul>
+			{% for gem in item.gems %}
+			<li class="item_desc">{{gem}}</li>
+			{% endfor %}
+		</ul>
+	</li>
+{% endif %}
+
+{% if item.gifted %}
+	<li class="item_desc">This item was gifted</li>
+{% endif %}
+
+{% if item.uses %}
+	<li class="item_desc">Uses: {{item.uses}}</li>
+{% endif %}
+
+</ul>

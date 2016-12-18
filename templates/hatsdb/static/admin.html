@@ -1,0 +1,128 @@
+{% extends "hatsdb/static/header.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% load dajaxice_templatetags %}
+{% load get_underscore_vals %}
+
+{% block title %}Admin page for hetsdb{% endblock %}
+
+{% block head %}
+  <script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+  <script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+  <script type="text/javascript">
+	  function update_db(game_type,cache)
+	  {
+	  	$('#update_log').val($('#update_log').val() + '-------------------------------------------------------\n')
+	    $('#update_log').val($('#update_log').val() + "updating " + game_type + ", cache:" + cache + ' ..\n')
+	    $('#update_log').scrollTop(
+	        $('#update_log')[0].scrollHeight - $('#update_log').height())
+
+	    // $('#'+owner_id).append("<img src='{% static "images/ajax-loader-circle.gif" %}'>")
+	    Dajaxice.mongobase.update_db_ajax(Dajax.process,{ 'game_type':game_type, 'cache':cache})
+	  }
+
+	  function find_user()
+	  {
+	  	var steam_id = $('#steam_id').val()
+	    $('#find_user_results').append("<img src='{% static "images/ajax-loader-circle.gif" %}'>")
+	    Dajaxice.mongobase.find_user_ajax(Dajax.process,{'steam_id':steam_id})
+	  }
+
+	  function save(steam_id)
+	  {
+	  	var dota2_sub = $('#dota2_sub').is(':checked')
+	  	var tf2_sub = $('#tf2_sub').is(':checked')
+	  	var csgo_sub = $('#csgo_sub').is(':checked')
+	  	var donator = $('#donator').is(':checked')
+	    $('#savebutton').append("<img src='{% static "images/ajax-loader-circle.gif" %}'>")
+	    Dajaxice.mongobase.save_user_ajax(Dajax.process,{'steam_id':steam_id,"tf2_sub":tf2_sub,"dota2_sub":dota2_sub, "csgo_sub":csgo_sub,"donator":donator})
+	  }
+
+	  function get_stats()
+	  {
+	  	var show_on_site = $('#show_on_site').is(':checked')
+	    $('#stats').append("<img src='{% static "images/ajax-loader.gif" %}'>")
+	    Dajaxice.mongobase.stats_ajax(Dajax.process,{"show_on_site":show_on_site})
+	  }
+
+	  function load_log()
+	  {
+	  	var log_date = $('#log_date').val()
+	    $('#log').append("<img src='{% static "images/ajax-loader.gif" %}'>")
+	    Dajaxice.mongobase.log_ajax(Dajax.process,{"log_date":log_date})
+	  }
+
+	  function load_defitems(game_type)
+	  {
+	  	$('#results').append("<img src='{% static "images/ajax-loader.gif" %}'>")
+	  	Dajaxice.mongobase.load_defitems_ajax(Dajax.process,{"game_type":game_type})
+	  }
+
+	  function load_qualities(game_type)
+	  {
+	  	$('#results').append("<img src='{% static "images/ajax-loader.gif" %}'>")
+	  	Dajaxice.mongobase.load_qualities_ajax(Dajax.process,{"game_type":game_type})
+	  }
+
+	  function load_effects(game_type)
+	  {
+	  	$('#results').append("<img src='{% static "images/ajax-loader.gif" %}'>")
+	  	Dajaxice.mongobase.load_effects_ajax(Dajax.process,{"game_type":game_type})
+	  }
+
+	  function save_item(defindex,game_type)
+	  {
+	  	var show = $('#'+defindex).is(':checked')
+	    $('#savebutton'+defindex).append("<img src='{% static "images/ajax-loader-circle.gif" %}'>")
+	    Dajaxice.mongobase.save_item_ajax(Dajax.process,{'defindex':defindex,"game_type":game_type,"show":show})
+	  }
+
+	  function save_quality(defindex,game_type)
+	  {
+	  	var show = $('#'+defindex).is(':checked')
+	  	var colour = $('#c'+defindex).val()
+	    $('#savebutton'+defindex).append("<img src='{% static "images/ajax-loader-circle.gif" %}'>")
+	    Dajaxice.mongobase.save_quality_ajax(Dajax.process,{'defindex':defindex,"game_type":game_type,"show":show,"colour":colour})
+	  }
+
+	  function save_effect(defindex,game_type)
+	  {
+	  	var show = $('#'+defindex).is(':checked')
+	    $('#savebutton'+defindex).append("<img src='{% static "images/ajax-loader-circle.gif" %}'>")
+	    Dajaxice.mongobase.save_effect_ajax(Dajax.process,{'defindex':defindex,"game_type":game_type,"show":show})
+	  }
+  </script>
+{% endblock %}
+
+{% block content %}
+
+<div class='row'>
+	<div class='large-12 columns'>
+		<dl class="tabs" data-tab>
+		  <dd class='active'><a href="#simple4">Users</a></dd>
+		</dl>
+
+		<div class="tabs-content">
+
+		  <div class='content active' id="simple4">
+
+		  	<!-- search fields for find user  -->
+		  	<div class='row'>
+	  			<div class='large-4 columns'>
+	  				<input type=text id="steam_id">
+	  			</div>
+
+	  			<div class='large-3 columns end'>
+	  				<a class='tiny button' onClick='find_user()'>Go</a>
+	  			</div>
+	  		</div>
+
+	  		<div class='row'>
+	  			<div class='large-12 columns' id="ajax_user"></div>
+	  		</div>
+		  </li>
+
+		</div>
+	</div>
+</div>
+{% endblock %}

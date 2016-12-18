@@ -1,0 +1,50 @@
+{% load humanize %}
+{% if results %}
+<table>
+	<tr>
+		<td>ava</td>
+		<td style='width:200px'>steamid</td>
+		<td>nickname</td>
+		<td>tf2 sub</td>
+		<td>doter sub</td>
+		<td>csgo</td>
+		<td>donator</td>
+	</tr>
+	<tr>
+		<td><img src="{{results.avatar_url}}"></td>
+		<td><a href="http://steamcommunity.com/profiles/{{results.steamid}}">{{results.steamid}}</a></td>
+		<td>{{results.nickname}}</td>
+		<td style='width:200px'>
+			<input type='checkbox' 
+			{% if results.premium_tf2 %}
+			checked
+			{% endif %}
+			 id="tf2_sub">
+		</td>
+		<td>
+			<input type='checkbox' 
+			{% if results.premium_dota2 %}
+			checked
+			{% endif %}
+			 id="dota2_sub">
+		</td>
+		<td>
+			<input type='checkbox' 
+			{% if results.premium_csgo %}
+			checked
+			{% endif %}
+			 id="csgo_sub">
+		</td>
+		<td>
+			<input type='checkbox' 
+			{% if results.donator %}
+			checked
+			{% endif %}
+			 id="donator">
+		</td>
+		<td><a class='tiny button' onClick=save("{{results.steamid}}") id='savebutton'>Save</a></td>
+	</tr>
+</table>
+{% else %}
+none found
+{% endif %}

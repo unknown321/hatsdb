@@ -1,0 +1,64 @@
+<fieldset style="padding-top: 20px;padding-bottom:0px;margin-top: -12px;">
+	<legend>
+		Regular filters
+	</legend>
+
+		<!-- Exterior filter -->
+		<div class="row">
+			<div class='large-4 columns'>
+				<label class="right inline">Exterior:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='exterior' id='exterior'>
+				 <option value=''>Any exterior</option>
+				 {% for exterior in data.exteriors %}
+				 <option value='{{ exterior.defindex }}' >{{ exterior.name }}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>
+
+		<!-- Strange parts filter -->
+		<div class="row">
+			<div class='large-4 columns'>
+				<label class="right inline">Stickers:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='stickers' id='stickers'>
+				 <option value=''>Any sticker</option>
+				 {% for sticker in data.stickers %}
+				 <option value='{{ sticker.defindex }}' >{{ sticker.name }}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>
+
+	<!-- gifted filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline" for='gifted'>Gifted:</label>
+			</div>
+			<div class="large-8 columns" style="padding-top: 9px; padding-bottom: 9px;">
+				<input type='checkbox' name='gifted' id='gifted' autocomplete='off'>
+			</div>
+		</div>
+
+		<!-- item uses filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Item uses:</label>
+			</div>
+			<div class='large-8 columns end'>
+				<input type="text" name="item_uses" id="item_uses" placeholder="Numbers only; blank for any number of uses" autocomplete="off"/>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="large-12 columns">
+				<label class="right inline">Looking for tournament items and need more options? <a href="/csgo/tournament">Click here!</a></label>
+			</div>
+		</div>
+
+</fieldset>

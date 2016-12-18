@@ -1,0 +1,100 @@
+{% extends "hatsdb/static/header.html" %}
+{% load dajaxice_templatetags %}	
+{% load humanize %}
+{% load staticfiles %}
+{% load webdesign %} 
+{% block head %}
+
+<script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+<script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+<script type="text/javascript" src="{% static "javascripts/site/blacklist.js" %}"></script>
+<link rel="stylesheet" href="{% static "stylesheets/site/blacklist.css" %}"/>
+{% endblock %}
+{% block title%}Blacklist editor{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+
+
+<div class="row">
+    <div class='large-12 columns'>
+	    <h3><center>Select your game</center></h3>
+
+		<ul class="button-group">
+		  	<li>
+			  	<a class='button secondary radius'  style='width:323px' onClick='switch_game("tf2",this)'>
+			    	<img src="{% static "images/tf2.png" %}" />
+			    </a>
+			</li>
+		 	<li>
+		 		<a class='button secondary radius' style='width:323px' onClick='switch_game("dota2",this)'>
+		    		<img src="{% static "images/dota2.png" %}" />
+		    	</a>
+		    </li>
+		  	<li>
+		  		<a class='button secondary radius' style='width:323px' onClick='switch_game("csgo",this)'>
+		    		<img src="{% static "images/csgo.png" %}" />
+		    	</a>
+		    </li>
+		</ul>
+		<hr style='margin-top:0px'>
+	</div>
+</div>
+
+<div class='row' id='bl_stuff' style='display:none' data-equalizer>
+	<div class='large-6 columns' data-equalizer-watch>
+		<textarea id='blacklist' style='height:381px'></textarea>
+	</div>
+
+	<div class='large-4 columns' data-equalizer-watch>
+		<div class='row collapse'>
+
+			<div class='large-8 columns'>
+				<input type="text" list="items" id='lang' autocomplete='off'>
+			</div>
+
+			<div class='large-4 columns'>
+				<a href="#!" class='button postfix' onclick='add_item(this)'><i class='fi-plus'></i> Add</a>
+			</div>
+
+			<datalist id="items">
+			</datalist>
+		</div>
+		<div class='row'>
+			<div class='large-12 columns'>
+				<div class='panel'>
+					<ul>
+						<li>Every item mentioned here will be removed from your scanner output (including scans of your friends).</li>
+						<li>Blacklist format: one item name per line, separated by semicolon.</li>
+						<li>You can get an example by hitting 'Load default' button.</li>
+						<li>Only exact matches work - 'The Sandman' will hide only unique sandmans, while Vintage ones remain.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class='large-2 columns' data-equalizer-watch>
+		<p class='button expand success' onClick='save_blacklist()' id='save_button'><i class='fi-save'></i> Save</p></br>
+		<p class='button expand alert' onClick="clear_blacklist()"><i class='fi-x'></i> Clear</p></br>
+		<p class='button expand Secondary' onClick='load_default()'><i class='fi-arrow-down'></i> Load default</p>
+	</div>
+</div>
+
+
+		
+
+
+
+<input type='hidden' value="" id='game_type' autocomplete='off'>
+<input type='hidden' id='blacklist_tf2' value="{{user_details.blacklist_tf2|safe}}" autocomplete='off'>
+<input type='hidden' id='blacklist_dota2' value="{{user_details.blacklist_dota2|safe}}" autocomplete='off'>
+<input type='hidden' id='blacklist_csgo' value="{{user_details.blacklist_csgo|safe}}" autocomplete='off'>
+{%endif%}
+{% endblock %}
+{% block footer_scripts %}
+<script type="text/javascript">
+$('#lang').on('input', function a(){load_names()} );
+</script>
+{% endblock %}

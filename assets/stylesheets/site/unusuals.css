@@ -1,0 +1,43 @@
+.filter_button{
+	margin-bottom:0px;
+}
+
+form{
+	margin-bottom:0px;
+}
+
+table.unusuals > thead > tr > th{
+	text-align: center;
+}
+
+table.unusuals > tbody > tr > td{
+	text-align: center;
+}
+
+.check{
+	margin-bottom: 0px;
+}
+
+.item.panel:hover{
+	background-color: #a2a2a2;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.defitems{
+	margin-top:20px;
+}
+
+i.fi-check.hidden{
+	display: none;
+	color: #43ac6a;
+	font-size: 25px;
+}
+
+table.australiums > thead > tr > th{
+	text-align: center;
+}
+
+table.australiums > tbody > tr > td{
+	text-align: center;
+}

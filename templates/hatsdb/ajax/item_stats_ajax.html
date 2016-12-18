@@ -1,0 +1,32 @@
+{% load humanize %}
+<table style='height:150px' id='stats_table'>
+	<tr>
+		<td colspan=2>
+			 <div style="overflow:scroll;height:120px;width:100%;overflow:auto">
+				 <table style='width:100%;margin-bottom:-10px'>
+					{% for s in stats %}
+						<tr>
+							<td style='background-color:{{s.quality.colour}};opacity:0.8'>
+								<p style='text-color:#ffffff;margin:0px'>
+									{{s.quality.name}}
+								</p>
+							</td>
+							<td>{{s.count|intcomma}}</td>
+							<td>{% if s.price == 0 %}
+								No price
+								{% else %}
+								${{s.price|intcomma}}
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan=2>Items overall: {{stats.0.overall|intcomma}}</td>
+	</tr>
+</table>
+

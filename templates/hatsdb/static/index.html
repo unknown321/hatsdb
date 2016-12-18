@@ -1,0 +1,89 @@
+{% extends "hatsdb/static/header.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% load webdesign %}
+{% block head%}
+
+{% endblock %}
+{% block custom_scripts%}{% endblock %}
+
+{% block menu_first %}active{% endblock %}
+
+{% block title%}Welcome!{% endblock %}
+
+{% block body_tag %}{% endblock%}
+
+{% block content %}
+
+
+<div class='row'>
+  <div class='large-12 columns'>
+    <h3><center>Welcome to HatsDB, a site dedicated to virtual cosmetics in Valve games</center></h3>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='large-12 columns'>
+    <div data-alert class="alert-box secondary">
+      CS:GO database is being populated - don't be surprised by low amount of items.
+    </div>
+  </div>
+</div>
+
+{% if user_details.premium_tf2 and user_details.premium_dota2 and not user_details.premium_csgo %}
+<div class='row'>
+  <div class='large-12 columns'>
+    <div data-alert class="alert-box secondary">
+     If you wonder why you don't have CS:GO premium: due to new additions I have to pay for hosting even more now. Old premium system was providing just enough money to keep the site alive; it won't work with new hosting prices. That's how the things are now.
+    </div>
+  </div>
+</div>
+{% endif %}
+ <div class="row">
+
+      <div class="large-4 columns">
+        <div class="panel">
+          <center>
+            <img src="{% static "images/tf2.png" %}" alt='Team Fortress 2' title='Team Fortress 2'>
+          </center>
+          </br>
+          <center><h4>Scanner</h4></center>
+            <a href="/tf2/scanner/" class=" button success expand"><i class="fi-magnifying-glass"></i> Server scanner</a>
+            <a href="/tf2/friends/" class=" button success expand"><i class="fi-torsos-male-female"></i> Scan friends</a>
+          <center><h4>Item database</h4></center>
+            <a href="/tf2/search/" class="large button expand"><i class="fi-results"></i> Item search</a>
+            <a href="/tf2/unusuals/" class="button expand"><i class="fi-star"></i> Unboxed unusuals</a>
+            <a href="/australium/" class="button expand"><i class="fi-crown"></i> Australium weapons</a>
+        </div>
+      </div>
+
+      <div class="large-4 columns">
+        <div class="panel" >
+          <center><img src="{% static "images/dota2.png" %}" alt='DOTA 2' title='DOTA 2'></center>
+          <br>
+          <center><h4>Scanner</h4></center>
+            <a href="/dota2/scanner/" class="button success expand"><i class="fi-magnifying-glass"></i> Server scanner</a>
+            <a href="/dota2/friends/" class="button success expand"><i class="fi-torsos-male-female"></i> Scan friends</a>
+          <center><h4>Item database</h4></center>
+            <a href="/dota2/search/" class="large button expand"><i class="fi-results"></i> Item search</a>
+            <a href="/dota2/unusuals/" class="button expand"><i class="fi-guide-dog"></i> Unusual couriers</a>
+            <a href="/dota2/tournament/" class="button expand"><i class="fi-trophy"></i> Heroic items</a>
+        </div>
+      </div>
+
+      <div class="large-4 columns">
+        <div class="panel" >
+          <center><img src="{% static "images/csgo.png" %}" alt='CS:GO' title='CS:GO'></center>
+          <br>
+          <center><h4>Scanner</h4></center>
+            <a href="/csgo/scanner/" class="button success expand"><i class="fi-magnifying-glass"></i> Server scanner</a>
+            <a href="/csgo/friends/" class="button success expand"><i class="fi-torsos-male-female"></i> Scan friends</a>
+          <center><h4>Item database</h4></center>
+            <a href="/csgo/search/" class="large button expand"><i class="fi-results"></i> Item search</a>
+            <a href="/csgo/unusuals/" class="button expand">★ Knifes</a>
+            <a href="/csgo/tournament/" class="button expand"><i class="fi-trophy"></i> Tournament drops</a>
+        </div>
+      </div>
+      
+  </div>
+{% endblock %}

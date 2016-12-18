@@ -1,0 +1,216 @@
+/*tf2 qualities*/
+div[quality='9'][game_type='tf2']{
+	border:solid 3px #70B04A
+}
+div[quality='0'][game_type='tf2']{
+	border:solid 3px #B2B2B2
+}
+div[quality='5'][game_type='tf2']{
+	border:solid 3px #8650AC
+}
+div[quality='3'][game_type='tf2']{
+	border:solid 3px #476291
+}
+div[quality='12'][game_type='tf2']{
+	border:solid 3px #000000
+}
+div[quality='10'][game_type='tf2']{
+	border:solid 3px #000000
+}
+div[quality='1'][game_type='tf2']{
+	border:solid 3px #4D7455
+}
+div[quality='2'][game_type='tf2']{
+	border:solid 3px #000000
+}
+div[quality='4'][game_type='tf2']{
+	border:solid 3px #000000
+}
+div[quality='11'][game_type='tf2']{
+	border:solid 3px #CF6A32
+}
+div[quality='13'][game_type='tf2']{
+	border:solid 3px #38F3AB
+}
+div[quality='7'][game_type='tf2']{
+	border:solid 3px #70B04A
+}
+div[quality='6'][game_type='tf2']{
+	border:solid 3px #FFD700
+}
+div[quality='14'][game_type='tf2']{
+	border:solid 3px #000000
+}
+div[quality='8'][game_type='tf2']{
+	border:solid 3px #A50F79
+}
+
+
+/*dota2 rarities*/
+div[quality='1'][game_type='dota2']{
+	border: solid 3px #b0c3d9
+}
+div[quality='2'][game_type='dota2']{
+	border: solid 3px #5e98d9
+}
+div[quality='3'][game_type='dota2']{
+	border: solid 3px #4b69ff
+}
+div[quality='4'][game_type='dota2']{
+	border: solid 3px #8847ff
+}
+div[quality='5'][game_type='dota2']{
+	border: solid 3px #d32ce6
+}
+div[quality='6'][game_type='dota2']{
+	border: solid 3px #eb4b4b
+}
+div[quality='7'][game_type='dota2']{
+	border: solid 3px #e4ae39
+}
+div[quality='8'][game_type='dota2']{
+	border: solid 3px #ade55c
+}
+
+
+/*csgo rarities*/
+div[quality='4'][game_type='csgo']{
+        border: solid 3px #b0c3d9
+}
+div[quality='5'][game_type='csgo']{
+        border: solid 3px #5e98d9
+}
+div[quality='6'][game_type='csgo']{
+        border: solid 3px #4b69ff
+}
+div[quality='7'][game_type='csgo']{
+        border: solid 3px #8847ff
+}
+div[quality='8'][game_type='csgo']{
+        border: solid 3px #d32ce6
+}
+div[quality='9'][game_type='csgo']{
+        border: solid 3px #eb4b4b
+}
+div[quality='10'][game_type='csgo']{
+        border: solid 3px #e4ae39
+}
+div[quality='11'][game_type='csgo']{
+        border: solid 3px #ade55c
+}
+
+
+/*uncraft-untrade*/
+img[tradable='False']{
+	background-color:rgba(255,0,0,0.3)
+}
+img[craftable='False']{
+	background-color:rgba(0,0,0,0.3)
+}
+img[craftable='False'][tradable='False']{
+	background-color:rgba(222,49,99,1)
+}
+
+div[tradable='False']{
+	background-color:rgba(255,0,0,0.3)
+}
+div[craftable='False']{
+	background-color:rgba(0,0,0,0.3)
+}
+div[craftable='False'][tradable='False']{
+	background-color:rgba(222,49,99,1)
+}
+
+.dota2wrapper {
+	margin-bottom:5px;
+	height:113px;
+	width:116px;
+	display:inline-block;
+	border:solid 4px;
+	position:relative;
+}
+
+.dota2image{
+	width: 110px !important;
+	height:73px !important;
+	background-size: 110px 73px !important;
+	display:inline-block !important;
+	margin-top:18px;
+}
+
+.tf2wrapper{
+	position:relative;
+	display:inline-block;
+	width:73px;
+	height:73px;
+	margin-bottom: 3px
+}
+
+.tf2image{
+	width: 68px !important; 
+	height: 68px !important; 
+	background-size: 68px 68px !important;
+	display:inline-block !important;
+}
+
+.csgowrapper{
+	margin-bottom:5px;
+	height:90px;
+	width:116px;
+	display:inline-block;
+	border:solid 4px;
+	position:relative;
+}
+
+.csgoimage{
+	width: 110px !important;
+	height:73px !important;
+	background-size: 110px 73px !important;
+	display:inline-block !important;
+}
+
+.levelbox{
+	position:absolute;
+	bottom:4px;
+	left:1px;
+	z-index:10;
+	display:none
+}
+
+.craftbox{
+	position:absolute;
+	bottom:4px;
+	right:1px;
+	z-index:10;
+	display:none
+}
+
+.qualitybox{
+	position:absolute;
+	top:4px;
+	left:1px;
+	z-index:10;
+	display:block
+}
+
+.colourbox{
+	position:absolute;
+	top:4px;
+	right:1px;
+	z-index:10;
+	display:block
+}
+
+.colourbox span{
+text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+
+
+.effectbox{
+        position:absolute;
+        bottom:4px;
+        right:1px;
+        z-index:10;
+        display:block
+}
+

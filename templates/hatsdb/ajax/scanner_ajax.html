@@ -1,0 +1,174 @@
+{% load staticfiles %}
+{% load get_underscore_vals %}
+<div class='row'>
+	<div class='large-12 columns'>
+		<div class='row collapse'>
+		    <div class="large-2 columns">
+		      <span class="prefix">Filter text:</span>
+		    </div>
+		    <div class="large-8 columns">
+		      <input type="text" id="right-label filter" >
+		    </div>
+		    <div class="large-1 columns">
+		    	<!-- http://stackoverflow.com/a/11246131/216941 -->
+		      <a href="#!" class="success button postfix" onclick='filter_items()'>Filter</a>
+		    </div>
+		    <div class="large-1 columns end">
+		      <a href="#!" class="alert button postfix" onclick='clear_filter()'>Clear</a>
+		    </div>
+		</div>
+	</div>
+	<img src="{% static "images/line.png" %}">
+</div>
+
+
+<div class='row' id='results'>
+{% for dict in results %}
+{% if dict.hours > 0 and dict.items|length > 0 %}
+	<div class='large-12 columns'>
+		<fieldset class='scanner_item'>
+			<legend	style="background-color: rgba(255, 255, 255, 0)">
+				<font size="4" color="#CCCCCC">
+					# {{forloop.counter}} ∙ <a href="http://steamcommunity.com/profiles/{{dict.info.id}}" target="_blank">
+					<img src="{{dict.info.avatar}}"> ∙ {{dict.info.nickname}}</a>
+				</font>
+				 ∙ 
+				<i class='fi-clock'></i> {% if dict.hours != -1 %}{{dict.hours}}{% else %}??{% endif %} hour{{dict.hours|pluralize}} 
+			</legend>
+			<div class='row' >
+				<div class='large-11 columns'>
+					<ul class="breadcrumbs">
+						<li class='player_info'>
+							<a href="http://steamcommunity.com/profiles/{{dict.info.id}}"><i class='fi-social-steam'></i>: {{dict.info.nickname}}</a></li>
+						<li class='player_info current'><i class='fi-clock'></i>: 
+							<img src="{% static "images/tf2_icon.png" %}"/> 
+							{% if dict.info.all_hours.440 != -1 %}{{dict.info.all_hours.440}}{% else %}??{% endif %} 
+							<img src="{% static "images/dota2_icon.png" %}"/> 
+							{% if dict.info.all_hours.570 != -1 %}{{dict.info.all_hours.570}}{% else %}??{% endif %} 
+							<img src="{% static "images/csgo_icon.png" %}"/> 
+							{% if dict.info.all_hours.730 != -1 %}{{dict.info.all_hours.730}}{% else %}??{% endif %} 
+						</li>
+						<li class='player_info'>
+							<i class='fi-link'></i>: 
+							<a href="http://tf2b.com/
+							{% if game_type == 'dota' %}dota{% else %}{{game_type}}{% endif %}/{{dict.info.id}}
+							">TF2B</a>
+						</li>
+						{% if game_type != 'csgo' %}
+						<li class='player_info'>
+							<i class='fi-link'></i>: <a href="http://{% if game_type == dota %}dota.{%endif%}backpack.tf/
+							profiles/{{dict.info.id}}
+							">Backpack.tf</a></li>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+
+				<div class='large-1 columns'>
+					<a class='tiny button' onClick="toggle_visibility('{{dict.info.id}}')" >▼</a>
+				</div>
+
+			</div>
+			<div class='row' id='{{dict.info.id}}'>
+			{% if dict.items == -1 %}
+				Steam returned an error, you should rescan this person again.
+			{% elif dict.items|length == 0 %}
+				<div class='large-12 centered columns'><center>No items of interest at all, probably private inventory.</center></div>
+			{% else %}
+				{% for key, value in dict.items.items %}
+				<div class='large-12 centered columns'>
+					<h4 class='q_name'>{{key}} ({{value|length}} item{{value|length|pluralize}})</h4>
+					<div class="panel quality_panel_{{game_type}}">
+
+						{% for item in value %}
+							{% if forloop.counter == 1 %}
+							<div class='row item_row' id='row_{{forloop.counter}}'>
+							{% endif %}
+
+							<div class='item_wrapper_{{game_type}}'
+							style='border: 3px solid #{{item.name_color}}'
+							id={{item.id}}
+							info='
+							
+								{% if item.marketable == 1 %}
+								<b><a href="http://steamcommunity.com/market/listings/{{game_id}}/{{item.market_hash_name}}" target="_blank">{{item.name}}</a></b> (click to look for item on market)
+								{% else %}
+								<b>{{item.name}}</b>
+								{% endif %}
+							</br>
+							{{item.type}}</br>
+							
+								<ul class="descriptions">
+								{% for d in item.descriptions %}
+								{% if d.value|length > 0 %}
+									{% if "(" in d.value or ":" in d.value %}
+										<li class="item_desc">{{d.value}}</li>
+									{%endif%}
+								{% endif %}
+								{%endfor%}
+
+								</ul>
+							
+							'
+							onClick="add_notification(this)">
+								<img src="http://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}/
+								{% if game_type == 'tf2'%}79fx79f{% else %}97fx97f{% endif %}" title="{{item.name}}"/>
+								
+							</div>
+
+						{% if forloop.counter != value|length %}
+							{% if game_type == 'tf2' and forloop.counter|divisibleby:11 %}
+								</div><div class='row item_row' id='row_{{forloop.counter}}'>
+							{% endif %}
+							{% if forloop.counter|divisibleby:9 %}
+								{% if game_type == 'dota2' or game_type == 'csgo'%}
+									</div><div class='row item_row' id='row_{{forloop.counter}}'>
+								{% endif %}
+							{% endif %}
+						{% endif %}
+						{% if forloop.counter == value|length %}
+						</div>
+						{% endif %}
+
+						{% endfor %}
+					</div>
+				</div>
+				{% endfor %}
+			{% endif %}
+			</div>
+		</fieldset>
+		
+	{% if user_details|premium:game_type or user_details.donator %}
+	<img src="{% static "images/line.png" %}">
+	{% else %}
+	<div class='row'>
+		<div class='large-12 columns'>
+			There could be some annoying advertisment, but site is running without them. Please <a href="/donate">donate</a> to remove this message and help the site.
+		</div>
+	</div>
+	{% endif %}
+	</div>
+{% endif %}
+{% endfor %}
+</div>
+
+<div class='row'>
+	<div class="twelve columns">
+ 		<div class="alert-box secondary">
+			It took us {{time}} to scan all profiles you pasted. Profiles with valuable items: {{results|length}}. Profiles failed with timeouts: {{timed_out}}.
+		</div>
+	</div>
+</div>
+
+<div class='row'>
+	<div class="twelve columns">
+ 		<div class="alert-box secondary">
+			Private profiles | Empty inventories:
+			{% for dict in results %}
+				{% if dict.hours == -1 or dict.items|length == 0  %}
+				<a class='underlined_link' href="http://steamcommunity.com/profiles/{{dict.info.id}}">{{dict.info.nickname}}</a> 
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>

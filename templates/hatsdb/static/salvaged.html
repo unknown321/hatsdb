@@ -1,0 +1,57 @@
+{% extends "hatsdb/static/header.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% load dajaxice_templatetags %} 
+{% load get_underscore_vals %}
+
+{% block head %}
+  <script type="text/javascript" src="{% static "javascripts/dajax/jquery.dajax.core.js" %}"></script>
+  <script language="JavaScript" type="text/javascript" src="{% static "javascripts/jquery.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "javascripts/dajaxice/dajaxice.core.js" %}"></script>
+{% endblock %}
+
+{% block title%}Salvaged Mann Co. Supply Crates{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class='row'>
+  <div class='large-12 columns'>
+  <h3>List of recently dropped Salvaged Mann Co. Supply Crates</h3>
+    {% if crates %}
+    <table class='large-12 columns'>
+      <thead>
+        <th>ID</th>
+        <th>Owner</th>
+        <th>Hours</th>
+        <th>Links</th>
+      </thead>
+      {% for item in crates %}
+        <tr>
+          <td>{{ item|get:"_id" }}</td>
+          <td>{{ item.owner }}</td>
+          <td>
+            {% if item.hours != -1 %}
+              {{item.hours}}
+            {% endif %}
+          </td>
+          <td>
+            {% if user_details|premium:'tf2' %}
+              <a target="_blank" href="http://steamcommunity.com/profiles/{{ item.owner.id }}"><img src='{% static "images/steam_icon.png" %}' width=20px></a>
+              <a target="_blank" href="http://tf2b.com/tf2/{{ item.owner.id }}"><img src='{% static "images/tf2b_icon.png" %}' width=20px></a>
+              <a target="_blank" href="http://backpack.tf/id/{{item.owner.id}}"><img src='{% static "images/backpack_tf_icon.png" %}' width=20px></a>
+              <a href="steam://friends/add/{{item.owner.id}}"><img src='{% static "images/add_user.png" %}' width=20px></a>
+            {% else %}
+              <a href='/buy'><span class="radius label">Buy</span></a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+   {% else %}
+    <p>No items at all.</p>
+    {% endif %}
+  </div>
+</div>
+{%endif%}
+
+{% endblock %}
+

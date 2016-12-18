@@ -1,0 +1,159 @@
+<fieldset style="padding-top: 20px;padding-bottom:0px;margin-top: -12px;">
+	<legend>
+		Regular filters
+	</legend>
+
+	<!-- level filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Level:</label>
+			</div>
+			<div class='large-8 columns end'>
+				<input type="text" name="level" id="level" placeholder="Numbers only; blank for any level" autocomplete="off"/>
+			</div>
+		</div>
+
+	<!-- effect filter -->
+		<div class="row">
+			<div class='large-4 columns'>
+				<label class="right inline">Effect:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='effect' id='effect'>
+				 <option value=''>Any effect</option>
+				 {% for e in data.effects %}
+				 <option value='{{ e.defindex }}' >{{ e.name }}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>	
+
+	<!-- paint filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Paint:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='paint_id' id='paint_id'>
+				 <option value=''>Any paint</option>
+				 {% for p in data.paints %}
+				 <option value='{{ p.defindex }}'>{{p.name}}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>
+
+	<!-- craft# filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Craft number:</label>
+			</div>
+			<div class="row collapse">
+				<div class='large-1 columns'>
+					<span class="prefix">#</span>
+				</div>
+				<div class='large-7 columns end'>
+					<input type="text" name="craftnumber" id="craftnumber" placeholder="Numbers only; blank for no limit" autocomplete="off"/>
+				</div>
+			</div>
+		</div>
+
+	<!-- gifted filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline" for='gifted'>Gifted:</label>
+			</div>
+			<div class="large-8 columns" style="padding-top: 9px; padding-bottom: 9px;">
+				<input type='checkbox' name='gifted' id='gifted' autocomplete='off'>
+			</div>
+		</div>
+
+</fieldset>
+
+<fieldset style='padding-bottom:0px;'>
+	<legend>
+		Killstreak weapons
+	</legend>
+
+	<!-- killstreak filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Killstreak type:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='ks_type' id='ks_type'>
+				 <option value=''>Any killstreaker</option>
+				 <option value='0'>None</option>
+				 <option value='1'>Specialized</option>
+				 <option value='2'>Professional</option>
+				</select>
+			</div>
+		</div>
+
+	<!-- killstreaker filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Killstreaker:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='ks_id' id='ks_id'>
+				 <option value=''>Any killstreaker</option>
+				 {% for p in data.killstreakers %}
+				 <option value='{{ p.defindex }}'>{{p.name}}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>
+
+	<!-- sheen filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Sheen:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='sheen_id' id='sheen_id'>
+				 <option value=''>Any sheen</option>
+				 {% for p in data.sheens %}
+				 <option value='{{ p.defindex }}' >{{p.name}}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>
+</fieldset>
+
+<fieldset style='padding-bottom:0px;'>
+	<legend>
+		Other filters
+	</legend>
+
+		<!-- Strange parts filter -->
+		<div class="row">
+			<div class='large-4 columns'>
+				<label class="right inline">Strange parts:</label>
+			</div>
+
+			<div class='large-8 columns end'>
+			 <select name='strange_parts' id='strange_parts'>
+				 <option value=''>Any part</option>
+				 {% for e in data.strange_parts %}
+				 <option value='{{ e.defindex }}' >{{ e.name }}</option>
+				 {% endfor %}
+				</select>
+			</div>
+		</div>
+
+		<!-- item uses filter -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label class="right inline">Item uses:</label>
+			</div>
+			<div class='large-8 columns end'>
+				<input type="text" name="item_uses" id="item_uses" placeholder="Numbers only; blank for any number of uses" autocomplete="off"/>
+			</div>
+		</div>
+</fieldset>

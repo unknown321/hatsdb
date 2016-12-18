@@ -1,0 +1,62 @@
+<ul class="descriptions">
+{% if item.craftnumber %}
+	<li class="item_desc">Craft #: {{item.craftnumber}}</li>
+{% endif %}
+
+{% if item.quality %}
+	<li class="item_desc">Quality: {{item.quality}}</li>
+{% endif %}
+
+{% if item.effect %}
+	<li class="item_desc">Effect: {{item.effect}}</li>
+{% endif %}
+
+{% if item.paint %}
+	<li class="item_desc">Painted: {{item.paint}}</li>
+{% endif %}
+
+{% if item.halloween_spell %}
+	<li class="item_desc">Halloween spells: 
+		<ul>
+			{% for spell in item.halloween_spell %}
+			<li class="item_desc">{{spell}}</li>
+			{% endfor %}
+		</ul>
+	</li>
+{% endif %}
+
+{% if item.strange_parts %}
+	<li class="item_desc">Strange parts: 
+		<ul>
+			{% for part in item.strange_parts %}
+			<li class="item_desc">{{part}}</li>
+			{% endfor %}
+		</ul>
+	</li>
+{% endif %}
+
+{% if item.killstreak_type %}
+	<li class="item_desc">Killstreak: {{item.killstreak_type}}</li>
+{% endif %}
+
+{% if item.ks_killstreaker %}
+	<li class="item_desc">Killstreaker: {{item.ks_killstreaker}}</li>
+{% endif %}
+
+{% if item.ks_sheen %}
+	<li class="item_desc">Sheen: {{item.ks_sheen}}</li>
+{% endif %}
+
+{% if item.quality_2 %}
+	<li class="item_desc">Second quality: {{item.quality_2}}</li>
+{% endif %}
+
+{% if item.gifted %}
+	<li class="item_desc">This item was gifted</li>
+{% endif %}
+
+{% if item.uses %}
+	<li class="item_desc">Uses: {{item.uses}}</li>
+{% endif %}
+
+</ul>

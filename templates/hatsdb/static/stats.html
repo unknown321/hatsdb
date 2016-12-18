@@ -1,0 +1,344 @@
+{% extends "hatsdb/static/header.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% load webdesign %} 
+
+{% block title %}Stats{% endblock %}
+{% block menu_fourth %} active {% endblock %}
+{% block content %}
+<div class='row'>
+	<div class='large-12 columns'>
+		</br>
+		<p>Here are the stats as for {{stats.last_changed|date:"F j, Y"}}.
+		</br>These numbers do not include: regular weapons, untradable gibuses, ETF2L medals and other low-priced stuff.</p>
+	</div>
+</div>
+	
+
+<div class='row' data-equalizer>
+	<div class='large-4 columns' >
+		<div class='panel' data-equalizer-watch>
+				<h2>TF2</h2>
+				<h3>Items: {{ stats.tf2_items|intcomma }}</h3>
+				<h4>Unusuals: {{ stats.tf2_unusuals|intcomma }}</h4>
+				<h4>Earbuds: {{ stats.tf2_earbuds|intcomma }}</h4>
+				<h4>Bill's hats: {{ stats.tf2_bills|intcomma }}</h4>
+				<h4>Australiums: {{ stats.tf2_australiums|intcomma }}</h4>
+		</div>
+	</div>
+
+	<div class='large-4 columns'>
+			<div class='panel' data-equalizer-watch>
+				<h2>Dota 2</h2>
+				<h3>Items: {{ stats.dota2_items|intcomma }}</h3>
+				<h4>Unusuals: {{ stats.dota2_unusuals|intcomma }}</h4>
+				<h4>Timebreakers: {{ stats.dota2_timebreakers|intcomma }}</h4>
+				<h4>Heroic items: {{ stats.dota2_tournament|intcomma }}</h4>
+				<h4>DC hooks: {{ stats.dota2_hooks|intcomma }}</h4>
+			</div>
+	</div>
+
+	<div class='large-4 columns'>
+			<div class='panel' data-equalizer-watch>
+				<h2>CS:GO</h2>
+				<h3>Items: {{ stats.csgo_items|intcomma }}</h3>
+				<h4>Knives: {{ stats.csgo_knives|intcomma }}</h4>
+				<h4>Tournament drops: {{ stats.csgo_tournament|intcomma }}</h4>
+			</div>
+	</div>
+
+	{% if user.is_superuser %}
+	<div class='large-4 columns'>
+			<div class='panel'>
+				<h2>Users</h2>
+				<h3>Total (premium + free): {{ stats.users }}</h3>
+			</div>
+	</div>
+	{% endif %}
+</div>
+
+<div class='row'>
+	<div class='large-12 columns'>
+		<dl class="accordion" data-accordion>
+		    <dd class="accordion-navigation">
+		    	<a href="#filter">Changelog</a>
+		        <div id="filter" class="content">
+
+					<h4>Changelog:</h4>
+
+
+			        <h6>07.11.2014</h6>
+				        <ul>
+					        <li>Rewrote everything;</li>
+					        <li>support for CS:GO</li>
+					        <li>tournament and australium items should be suppported now;</li>
+					        <li>fixes and stuff.</li>
+				        </ul>
+				        <hr style="width:50%">
+
+
+			        <h6>05.11.2013</h6>
+				        <ul>
+					        <li>Restored site from backup, lost some changelog notes;</li>
+					        <li>added timeouts to the scanner;</li>
+					        <li>fixed javascript stuff on search page;</li>
+					        <li>added online statuses for unusual lists.</li>
+				        </ul>
+				        <hr style="width:50%">
+
+
+					<h6>22.08.2013</h6>
+						<ul> 
+							<li>Fixed hours parsing;</li>
+							<li>added steam bot;</li>
+							<li>faq is rewritten now.</li>
+						</ul> 
+						<hr style="width:50%"> 
+
+					<h6>18.08.2013</h6>
+						<ul> 
+							<li>Fixed various Javascript bugs on scanner page.</li>
+						</ul> 
+						<hr style="width:50%"> 
+
+					<h6>16.08.2013</h6>
+						<ul> 
+							<li>Added support for CS:GO scanning.</li> 
+						</ul> 
+						<hr style="width:50%"> 
+
+					<h6>11.07.2013</h6>
+						<ul> 
+							<li>Reworked search;</li> 
+							<li>removed silly 'item list' page, moved functional to search;</li>
+							<li>added origin, craft # and paint filters to search;</li>
+							<li>fixed stats gathering. Again.</li>
+						</ul> 
+						<hr style="width:50%"> 
+
+
+					<h6>12.06.2013</h6>
+						<ul> 
+							<li>Fixed a couple of scanner issues (incorrect steamid and missing avatars/nicknames etc);</li> 
+							<li>fixed stats gathering.</li>
+						</ul> 
+						<hr style="width:50%"> 
+
+					<h6>10.05.2013</h6>
+						<ul> 
+							<li>Your profile is now excluded from scanner results.</li> 
+						</ul> 
+						<hr style="width:50%"> 
+
+					<h6>04.05.2013</h6>
+						<ul> 
+							<li>Unusuals list updates live;</li> 
+							<li>changed how scanner saves items;</li>
+							<li>fixed 'check' button for unusuals.</li>
+						</ul> 
+						<hr style="width:50%"> 
+
+					<h6>01.05.2013</h6>
+						<ul> 
+							<li>New server.</li> 
+						</ul> 
+						<hr style="width:50%"> 
+
+					<h6>Somewhere in April</h6> 
+						<ul>
+							<li>Some CSS stuff, support for dota qualities and colours; scanner fixes.</li>
+						</ul> 
+						<hr style="width:50%">
+
+			        <h6>20.03.2013</h6>
+				        <ul>
+				            <li>Added item filter to scanner page.</li>
+				        </ul>
+				        <hr style="width:50%">
+
+			        <h6>19.03.2013</h6>
+			            <ul>
+			                <li>Fixed 'Check' button;</li>
+			                <li>added series support for salvaged crates.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+					<h6>11.03.2013</h6>
+			            <ul>
+			                <li>Moved frontend to another server;</li>
+			                <li>added quality and rarity filters to scanner page;</li>
+			                <li>removed shitload of useless code;</li>
+			                <li>added proper error window instead of console messages;</li>
+			                <li>fixed rarity parsing.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+					<h6>Somewhere in February:</h6>
+			            <ul>
+			                <li>Improved database organisation;</li>
+			                <li>increased search speed like 100x.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+					<h6>12.01.2013:</h6>
+			            <ul>
+			                <li>Added class selector to 'All items' and 'Search' pages;</li>
+			                <li>fixed some more js-related bugs.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+					<h6>11.01.2013:</h6>
+			            <ul>
+			                <li>Updated stats;</li>
+			                <li>fixed some bugs.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+					<h6>10.01.2013:</h6>
+			            <ul>
+			                <li>Removed shitload of DOTA 2 and TF2 items from 'All items' page;</li>
+			                <li>slightly fixed item filtering on 'All items' page;</li>
+			                <li>added cool 'All items' page editor - admin only.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+
+					<h6>09.01.2013:</h6>
+			            <ul>
+			                <li>Moved scanner code to another server;</li>
+			                <li>added progressbar to the scanner page.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+			        <h6>28.10.2012:</h6>
+			            <ul>
+			                <li>Finally fixed scanner, works perfect now;</li>
+			                <li>fixed IE issues;</li>
+							<li>added 'last 20 unboxed unusuals' page for subscribed users.</li>
+			            </ul>
+			            <hr style="width:50%">
+
+					<h6>12.10.2012:</h6>
+			            <ul>
+							<li>Resurrected site after server memory issues;</li>
+							<li>fixed some unusual couriers not showing in "default items" section.</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>06.10.2012:</h6>
+			            <ul>
+							<li>Updated admin controls;</li>
+							<li>slightly improved code quality.</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>29.09.2012:</h6>
+			            <ul>
+							<li>Improved browsing by quality;</li>
+							<li>fixed some database entries without effects.</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>25.09.2012:</h6>
+			            <ul>
+							<li>Added AJAX to the search page;</li>
+							<li>improved search algorythm.</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>7.09.2012:</h6>
+			            <ul>
+							<li>Fixed broken scanner;</li>
+							<li>uncraftable untradable items are marked too now (or are they?)</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>5.09.2012:</h6>
+			            <ul>
+							<li>AJAX added to database browsing pages:
+								<ul>
+									<li>- added 'Add friend' link;</li>
+									<li>- added 'Load 100 random items with %some quality%' button;</li>
+									<li>- added 'Check' button to check if the item is still in owner's backpack;</li>
+									<li>- added information (name, avatar, status/last online) about owner - click on steamid.</li>
+								</ul>
+							</li>
+						</ul>
+						<hr style="width:50%">
+
+			        <h6>2.09.2012:</h6>
+			            <ul>
+							<li>AJAX added to scanner, no more page reloads.
+								<ul>
+									<li>- added 'Add friend' link;</li>
+									<li>- now you don't have to clean textbox with pasted steamids.</li>
+								</ul>
+							</li>
+						</ul>
+						<hr style="width:50%">
+
+			        <h6>21.08.2012:</h6>
+			            <ul>
+							<li>Fixed login issues</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>20.08.2012:</h6>
+						<ul>
+							<li><span class='radius label'>you must always backup data before changing it on working site</span></li>
+							<li>Uncraftable items on scanner page are now highlighted.</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>19.08.2012:</h6>
+						<ul>
+							<li>Untradeable items on scanner page are now highlighted.</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>18.08.2012:</h6>
+						<ul>
+							<li>Added howto to scanner page;</li>
+							<li>Added backpack links to backpack.tf on scanner, quality and all items pages for TF2 only - backpack.tf doesn't support DOTA2 yet.</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>16.08.2012:</h6>
+						<ul>
+							<li>Updated item schema - MvM items added;</li>
+							<li>updated item scanner;</li>
+							<li><span class='radius label'>Note:</span> Steam servers are under heavy load so scans can be incomplete</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>13.08.2012:</h6>
+						<ul>
+							<li>Updated item schema;</li>
+							<li>updated item scanner - Valve is messing with item schema again;</li>
+							<li>started to move chunks of data to our main database</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>10.08.2012:</h6>
+						<ul>
+							<li>Scan results are now separated by quality and sorted by item name;</li>
+							<li>additional info on stats page;</li>
+							<li>some database tweaks;</li>
+							<li>removed Nessie's Nine Iron from database and scan results;</li>
+							<li>finally fixed hiding f2p players on scanner page;</li>
+							<li><span class='radius alert label'>experimental</span> effects support;</li>
+							<li>added new promos to database and scanner</li>
+						</ul>
+						<hr style="width:50%">
+
+					<h6>29.07.2012:</h6>
+						<ul>
+							<li>Site was discovered by imageboard users, unplanned launch</li>
+						</ul>
+		        </div>
+		    </dd>
+		</dl>
+	</div>
+</div>
+
+{% endblock %}

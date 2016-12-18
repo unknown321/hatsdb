@@ -1,0 +1,36 @@
+{% for item in defitems %}
+	{% if forloop.counter == 1 %}
+		<div class='row'>
+	{% endif %}
+
+		{% if forloop.counter == defitems|length %}
+			<div class='large-3 columns end'>
+		{% else %}
+			<div class='large-3 columns'>
+		{% endif %}
+				<div class='item panel' onClick='second_step(this)'
+				defindex="{{item.defindex}}"
+				img_url="{{item.image_url}}"
+				name="{{item.name}}"
+				>
+					<center>
+						<img src="{{item.image_url}}"/>
+						</br>
+						{{item.name}}
+						{% if item.rarity %}
+						</br>({{item.rarity}})
+						{% endif %}
+					</center>
+				</div>
+			</div>
+
+	{% if forloop.counter|divisibleby:"4" %}	
+		</div>
+		<div class='row'>
+	{% endif %}
+
+	{% if forloop.counter == defitems|length %}
+	</div>
+	{% endif %}
+
+{% endfor %}

@@ -1,0 +1,93 @@
+{% load get_underscore_vals %}
+{% load humanize %}
+{% load staticfiles %}
+<div class='row'>
+  <div class='large-12 columns' id="results">
+    {% if data.items %}
+    <table class='unusuals'>
+      {% if data.amount %}
+      <p>Total: {{data.amount}} item{{data.amount|pluralize}}; page {{data.page}} of {{data.amount|divide:50}}</p>
+      {% endif %}
+      <thead>
+        <th width='30'>#</th>
+        <th>Item</th>
+        <th width='110'>Team 1</th>
+        <th width='110'>Team 2</th>
+        <th>Player</th>
+        <th width='110'>Event type</th>
+        <th width='60'>Owner</th>
+        <th width='80'>Hours</th>
+        <th width='112'>Links</th>
+      </tr>
+      </thead>
+      {% for item in data.items %}
+        <tr>
+          <td>{% if data.page > 1 %}
+                {{data.page|add:-1|multiply:50|add:forloop.counter}}
+              {% else %}
+                {{forloop.counter}}
+              {% endif %}
+          </td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.tournament_info.team1 }}</td>
+          <td>{{ item.tournament_info.team2 }}</td>
+          <td><a href="http://steamcommunity.com/profiles/{{item.tournament_info.player_sid}}">{{ item.tournament_info.player }}</a></td>
+          <td>{{ item.tournament_info.event }}</td>
+          <td>
+            <font style='color:{% if item.owner_status == 'Offline' %}red{% else %}green{% endif %}'>
+              {{item.owner_status}}
+            </font>            
+          </td>
+
+          <td>
+            {% if item.hours != -1 %}
+              {{item.hours|trim|intcomma}}
+            {% else %}
+              ??
+            {% endif %}
+          </td>
+
+          <td>
+            {% if user_details|premium:'dota2' %}
+              <a target="_blank" href="http://steamcommunity.com/profiles/{{ item.owner }}">
+                <img src='{% static "images/steam_icon.png" %}' width='20px'>
+              </a>
+              <a target="_blank" href="http://tf2b.com/dota2/{{ item.owner }}">
+                <img src='{% static "images/tf2b_icon.png" %}' width='20px'>
+              </a>
+              <a target="_blank" href="http://dota2.backpack.tf/profiles/{{item.owner}}">
+                <img src='{% static "images/backpack_tf_icon.png" %}' width='20px'>
+              </a>
+              <a href="steam://friends/add/{{item.owner}}">
+                <img src='{% static "images/add_user.png" %}' width='20px'>
+              </a>
+            {% else %}
+              <a href='/buy'><span class="radius label">Buy</span></a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <p>No items at all.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class='row' id='nav_buttons'>
+  <div class='large-3 columns'>
+    {% if data.page > 1  %}
+      <a href="#" onClick='load_filtered_tourneys({{data.page|add:-1}})' class='button'>
+        &laquo Previous page 
+      </a>
+    {% endif %}
+  </div>
+
+  <div class='large-3 columns large-offset-6' style='text-align:right'>
+    {% if data.amount > data.page|multiply:50 %}
+      <a href="#" onClick='load_filtered_tourneys({{data.page|add:1}})' class='button'>
+        Next page &raquo
+      </a>
+    {% endif %}
+  </div>
+</div>

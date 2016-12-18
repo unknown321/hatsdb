@@ -1,0 +1,267 @@
+{% extends "hatsdb/static/header.html" %}
+{% load humanize %}
+{% load staticfiles %}
+{% load webdesign %} 
+
+{% block title%}FAQ{% endblock %}
+{% block menu_third%} active {% endblock %}
+{% block head%}
+<script type="text/javascript">
+function flash(text)
+{
+	$(text).animate({'background-color': '#43AC6A'},'slow');
+	$(text).animate({'background-color': 'transparent'},'slow');	
+}
+
+</script>
+{%endblock%}
+{% block content %}
+<div class='row'>
+	<div class='large-12 columns'>
+			<h4>FAQ</h4>
+			<div class='large-9 columns panel centered'>
+				<ol>
+					<h5><i class='fi-clipboard-notes'></i> General questions</h5>
+						<li><a href="#general1" onClick="flash('#general1')">So what is this site about?</a></li>
+						<li><a href="#general2" onClick='flash("#general2")'>How often do you update your database?</a></li>
+						<li><a href="#general3" onClick='flash("#general3")'>How big is the database?</a></li>
+						<li><a href="#general4" onClick='flash("#general4")'>Can I use it for free?</a></li>
+					<hr>
+					<h5><i class="fi-dollar"></i> Premium</h5>
+						<li><a href="#premium1" onClick='flash("#premium1")'>How do I get premium?</a></li>
+						<li><a href="#premium2" onClick='flash("#premium2")'>Does the premium gives me full access?</a></li>
+						<li><a href="#premium3" onClick='flash("#premium3")'>Can you give me access for 5 mins so I can get earbills to pay you?</a></li>
+						<li><a href="#premium4" onClick='flash("#premium4")'>Can I share my account with my friends after getting premium?</a></li>
+					<hr>
+					<h5><i class="fi-dollar"></i> Donator</h5>
+						<li><a href="#donator1" onClick='flash("#donator1")'>How do I become a donator?</a></li>
+						<li><a href="#donator2" onClick='flash("#donator2")'>Does the donator status gives me full access?</a></li>
+					<hr>
+					<h5><i class='fi-magnifying-glass'></i> Scanner</h5>
+						<li><a href="#scanner1" onClick='flash("#scanner1")'>What features does the scanner have?</a></li>
+						<li><a href="#scanner2" onClick='flash("#scanner2")'>How do I scan?</a></li>
+						<li><a href="#scanner3" onClick='flash("#scanner3")'>Scanner is so slow, why?</a></li>
+					<hr>
+					<h5><i class='fi-wrench'></i> Trade bot</h5>
+						<li><a href="#bot1" onClick='flash("#bot1")'>A bot?</a></li>
+						<li><a href="#bot2" onClick='flash("#bot2")'>What can the bot do?</a></li>
+						<li><a href="#bot3" onClick='flash("#bot3")'>How do I communicate with you via bot?</a></li>
+						<li><a href="#bot4" onClick='flash("#bot4")'>How do I get premium?</a></li>
+					<hr>
+					<h5><i class='fi-clipboard-pencil'></i> Other questions and stuff</h5>
+						<li><a href="#other1" onClick='flash("#other1")'>This is so suspicious, you have to be a scammer and the site is probably fake! And your profile is private!</a></li>
+						<li><a href="#other2" onClick='flash("#other2")'>Who made this website?</a></li>
+						<li><a href="#other3" onClick='flash("#other3")'>Hmm, something looks broken.</a></li>
+						<li><a href="#other4" onClick='flash("#other4")'>Hats<b><u>DB</u></b>?</a></li>
+						<li><a href="#other5" onClick='flash("#other5")'>I want to donate some hats.</a></li>
+						<li><a href="#other6" onClick='flash("#other6")'>Oh God, these buttons looks so neat!</a></li>
+						<li><a href="#other7" onClick='flash("#other7")'>I have a question!</a></li>
+
+				</ol>
+			</div>
+</div>
+</div>
+
+<div class='row'>
+	<div class='large-12 columns'>
+
+		<h4 id='general'><i class='fi-clipboard-notes'></i> General questions</h4>
+		<hr>
+				<h5 id="general1">So what is this site about?</h5>
+				<ul>
+					<li>This site provides access to database of TF2, Dota 2 and CS:GO items. It contains info about items and their respective owners. So if you want to find persons with unusual Team Captains or Elder Timebreakers or even Filed-Tested M4 | Asiimovs - you came to the right place. Oh yea, and there is also a server scanner.</li>
+				</ul>
+				<br>
+
+				<h5 id='general2'>How often do you update your database?</h5>
+				<ul>
+					<li>Database updates itself 24/7. Right now.</li>
+				</ul>
+				<br>
+
+				<h5 id='general3'>How big is the database?</h5>
+				<ul>
+					<li>Take a look at <a href='/stats'>stats page</a>. These numbers do not include regular weapons, ETF2L medals and other untradable/very cheap stuff.</li>
+				</ul>
+				<br>
+
+				<h5 id='general4'>Can I use it for free?</h5>
+				<ul>
+					<li>Of course you can - <a href='/tf2/search'>give it a try</a>. Server scanner is available for free, but database access comes with some restrictions: profiles with low amount of hours (less than 300) are hidden for non-premium users.</li>
+				</ul>
+				<br>
+
+		<h4 id='premium'><i class="fi-dollar"></i> Premium</h4>
+		<hr>
+
+				<h5 id='premium1'>How do I get premium?</h5>
+				<ul>
+					<li>Visit <a href='/buy'>this page</a> for some additional information.</li>
+				</ul>
+				<br>
+
+				<h5 id='premium2'>Does the premium gives me full access?</h5>
+				<ul>
+					<li>Yes, everything will be unlocked as soon as you get premium.</li>
+				</ul>
+				<br>
+
+				<h5 id='premium3'>Can you give me access for 5 mins so I can get earbills to pay you?</h5>
+				<ul>
+					<li>Nope, this is impossible. However, you can use free version of the site with restrictions (profiles with low amount of hours (less than 300) are hidden for non-premium users).</li>
+				</ul>
+				<br>
+
+				<h5 id='premium4'>Can I share my premium account with my friends?</h5>
+				<ul>
+					<li>Nope, this is impossible. Site is running only because of your premium payments.</li>
+				</ul>
+				<br>
+
+				<h5 id='premium5'>How long does the premium work?</h5>
+				<ul>
+					<li>Forever (and ever).</li>
+				</ul>
+				<br>
+
+		<h4 id='donator'><i class="fi-dollar"></i> Donator</h4>
+		<hr>
+
+				<h5 id='donator1'>How do I become a donator?</h5>
+				<ul>
+					<li>Visit <a href='/buy#donator'>this page</a> for some additional information.</li>
+				</ul>
+				<br>
+
+				<h5 id='donator2'>Does the donator status gives me full access?</h5>
+				<ul>
+					<li>No. The donator status gives access to "Scan friends" option.</li>
+				</ul>
+				<br>
+
+
+		<h4 id='scanner'><i class='fi-magnifying-glass'></i> Scanner</h4>
+		<hr>
+
+				<h5 id='scanner1'>What features does the scanner have?</h5>
+				<ul>
+					<li>Scanner has:
+						<ul>
+							<li>
+								Filters for untradable items and F2P players;
+							</li>
+							<li>
+								post-scan filters, such as: by name, level, quality;
+							</li>
+							<li>
+								user-defined blacklist.
+							</li>
+						</ul>
+						Scanner supports TF2, Dota 2 and CS:GO.
+					</li>
+				</ul>
+
+				<h5 id='scanner2'>How do I scan?</h5>
+				<ul>
+					<li>There is a small how-to section on <a href='/scanner'>scanner page</a>.</li>
+				</ul>
+
+				<h5 id='scanner3'>Scanner is so slow, why?</h5>
+				<ul>
+					<li>Scanning is performed on separate server. Let me explain how it works.
+						<ul>
+							<li>
+								First of all, we send list of players to a server where it will be parsed.
+							</li>
+							<li>
+								Next, we will try to get backpack contents and if we fail - we will retry after a small delay.
+							</li>
+							<li>
+								Now we need to get amount of played hours - it takes like 70% of scanning time. Steam servers fail a lot during this procedure so there are a lot of retries.
+							</li>
+							<li>
+								After getting amount of hours we need to check every backpack for valuable items and throw away regular weapons and untradable pyrovision goggles.
+							</li>
+						</ul>
+						Hooray, scanning is finished. Usually it takes about 20 secs to scan 32 players, get amount of hours and perform a check for useless weapons. It can take some more time if there are a lot of users scanning at the same time - even though there is a separate server, it has its limits. Scanning can be slowed by Steam servers too - especially when they are having daily peaks of logged users (you can see it <a href="http://store.steampowered.com/stats">here</a>).
+					</li>
+				</ul>
+				<br>
+
+		<h4 id='bot'><i class='fi-wrench'></i> Trade bot</h4>
+		<hr>
+
+				<h5 id='bot1'>A bot?</h5>
+				<ul>
+					<li>Yes, a bot. I don't go online very often so I've made a decision to set up a bot - basically an answering machine.</li>
+				</ul>
+				<br>
+
+				<h5 id='bot2'>What can the bot do?</h5>
+				<ul>
+					<li>Bot is capable of: accepting friend requests, granting premiums and accepting donations. It also saves your messages for me so I can read them later.</li>
+				</ul>
+				<br>
+
+				<h5 id='bot3'>How to communicate with you via bot?</h5>
+				<ul>
+					<li>Type 'message your_message' without quotes after adding. You don't have to add underscores, just type anything you want after the 'message' command. The message will be saved and I'll try to reply as soon as I can.</li>
+				</ul>
+				<br>
+
+				<h5 id='bot4'>How do I get premium?</h5>
+				<ul>
+					<li>Please read 'Getting premium' section <a href='/buy#getting'>here</a>.</li>
+				</ul>
+				<br>
+
+		<h4 id='other'><i class='fi-clipboard-pencil'></i> Other questions and stuff</h4>
+		<hr>
+
+				<h5 id='other1'>This is so suspicious, you have to be a scammer and the site is probably fake! And your profile is private!</h5>
+				<ul>
+					<li>This site brings me money - there is no reason to scam my customers. Site contains real data - <a href='/tf2/search'>just go and make a search</a>. <br>My profile is private for security reasons - I really doubt that you want steamrep admins know that you are my customer.</li>
+				</ul>
+				<br>
+
+				<h5 id='other2'>Who made this website?</h5>
+				<ul>
+					<li><i class='fi-social-steam'></i><a href='http://steamcommunity.com/profiles/'></a> is the author of this website.</li>
+				</ul>
+				<br>
+
+				<h5 id='other3'>Hmm, something looks broken.</h5>
+				<ul>
+					<li>No worries! Add <i class='fi-social-steam'></i><a href='http://steamcommunity.com/profiles/'></a> and tell him about your problems by typing 'message problem_details'. You don't have to add underscores, just type anything you want after the 'message' command.</li>
+				</ul>
+				<br>
+
+				<h5 id='other4'>Hats<b><u>DB</u></b>?</h5>
+				<ul>
+					<li>DB stands for DataBase.</li>
+				</ul>
+				<br>
+
+				<h5 id='other5'>I want to donate something.</h5>
+				<ul>
+					<li>Add <i class='fi-social-steam'></i><a href='http://steamcommunity.com/profiles/'></a>, type 'donate', put any items you want and trade them. Please note that it won't give you premium.</li>
+				</ul>
+
+				<h5 id='other6'>Oh God, these buttons looks so neat!</h5>
+				<ul>
+					<li>Yep! This site was built with grorious <a href='http://foundation.zurb.com'>Foundation 5</a>.</li>
+				</ul>
+
+				<h5 id='other7'>I have a question that wasn't mentioned here!</h5>
+				<ul>
+					<li>Ask <i class='fi-social-steam'></i><a href='http://steamcommunity.com/profiles/'></a> by typing 'message your_question' after adding him (please note that bot is basically an answering machine and it may take me a long long time to answer). You don't have to add underscores, just type anything you want after the 'message' command. Premium users can send an e-mail (which should be a little bit faster).</li>
+				</ul>
+				<br>
+
+		<h3><center>AND PLEASE BEWARE OF IMPERSONATORS.<br> ADD BOT ONLY VIA LINKS ON SITE</center></h3>
+		<br>
+	</div>
+</div>
+
+
+{% endblock %}
